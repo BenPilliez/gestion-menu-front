@@ -1,6 +1,14 @@
 import React, {Component} from "react"
 import {connect} from "react-redux"
 import {signIn} from "../../store/actions/authActions"
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import Link from '@material-ui/core/Link';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import Container from '@material-ui/core/Container';
 
 
 class SignIn extends Component {
@@ -23,51 +31,54 @@ class SignIn extends Component {
 
     render() {
         return (
-            <div className={"container center"}>
-                <div className="row">
-                    <div className="col s12 ">
-                        <div className={"card-panel login"}>
-                            <form className={"white"} onSubmit={this.handleSubmit}>
-                                <div className="row">
-                                    <h5 className="grey-text text-darken-3">Aller on se connecte</h5>
-                                </div>
-                                <div className="row">
-                                    <div className="input-field s12 col">
-                                        <i className={"material-icons prefix"}>account_circle</i>
-                                        <label htmlFor="username">Pseudonyme</label>
-                                        <input className={"validate"} type="text" id={"username"}
-                                               onChange={this.handleChange}/>
-                                    </div>
-                                </div>
-
-                                <div className="row">
-                                    <div className="input-field s12 col">
-                                        <i className={"material-icons prefix"}>lock</i>
-                                        <label htmlFor="password">Mot de passe</label>
-                                        <input className={"validate"} type="password" id={"password"}
-                                               onChange={this.handleChange}/>
-                                    </div>
-                                </div>
-
-                                <div className="row">
-                                    <div className="input-field col-12 right-align">
-                                        <span className="margin right-align medium-small "><a href="#">T'as oublié ton mot de passe ?</a></span>
-                                    </div>
-
-                                </div>
-
-                                <div className="row">
-                                    <div className="input-field col s12 center-align">
-                                        <button className="btn waves-effect waves-light pink lighten-1 z-depth-0 ">Se
-                                            connecter
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
+            <Container component="main" maxWidth="xs">
+                <div>
+                    <Typography component="h1" variant="h5">
+                        Allez on se connecte
+                    </Typography>
+                    <form noValidate onSubmit={this.handleSubmit}>
+                        <TextField
+                            variant="outlined"
+                            margin="normal"
+                            required
+                            fullWidth
+                            id="username"
+                            label="Nom d'utilisateur"
+                            name="username"
+                            autoComplete="username"
+                            autoFocus
+                            onChange={this.handleChange}
+                        />
+                        <TextField
+                            variant="outlined"
+                            margin="normal"
+                            required
+                            fullWidth
+                            name="password"
+                            label="Mot de passe"
+                            type="password"
+                            id="password"
+                            autoComplete="current-password"
+                            onChange={this.handleChange}
+                        />
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            color="primary"
+                        >
+                            Se connecter
+                        </Button>
+                        <Grid container>
+                            <Grid item xs>
+                                <Link href="#" variant="body2">
+                                  T'as oublié ton mot de passe ?
+                                </Link>
+                            </Grid>
+                        </Grid>
+                    </form>
                 </div>
-            </div>
+            </Container>
         );
     }
 }

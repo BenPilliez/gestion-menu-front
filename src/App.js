@@ -1,23 +1,32 @@
 import React, {Component} from "react"
-import M from "materialize-css/dist/js/materialize.min.js"
 import SignIn from "./components/auth/SignIn";
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {BrowserRouter, Route, Switch} from "react-router-dom";
+import {connect} from "react-redux"
+import NavBar from "./components/layout/navbar";
+
 
 class App extends Component {
-    componentDidMount() {
-        M.AutoInit();
-    }
-
     render() {
+        const {user} = this.props
         return (
-            <div>
-                <SignIn/>
+            <BrowserRouter>
+                <SignIn />
+                <NavBar/>
+                <Switch>
+                </Switch>
                 <ToastContainer autoClose={2000}/>
-            </div>
+            </BrowserRouter>
         )
     }
 }
 
+const mapStateToProps = (state) => {
+    return {
+        user: state.auth.user
+    }
+}
 
-export default App;
+
+export default connect(mapStateToProps)(App);

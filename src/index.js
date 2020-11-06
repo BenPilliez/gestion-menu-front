@@ -3,19 +3,20 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import 'materialize-css/dist/css/materialize.min.css'
 import {createStore, applyMiddleware} from 'redux';
 import rootReducers from './store/reducers/rootReducers'
 import {Provider} from 'react-redux'
 import thunk from 'redux-thunk'
 import {axiosInstance} from "./config/axiosConfig"
 import {toast} from "react-toastify";
+import CssBaseline from '@material-ui/core/CssBaseline';
 
 const store = createStore(rootReducers, applyMiddleware(thunk.withExtraArgument({axiosInstance, toast})))
 
 ReactDOM.render(
     <React.StrictMode>
         <Provider store={store}>
+            <CssBaseline />
             <App/>
         </Provider>
     </React.StrictMode>,
