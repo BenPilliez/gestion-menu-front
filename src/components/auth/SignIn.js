@@ -1,7 +1,6 @@
 import React, {Component} from "react"
 import {connect} from "react-redux"
 import {signIn} from "../../store/actions/authActions"
-import clsx from 'clsx'
 import {
     withStyles,
     Button,

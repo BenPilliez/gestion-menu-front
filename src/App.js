@@ -5,18 +5,21 @@ import 'react-toastify/dist/ReactToastify.css';
 import {BrowserRouter, Route, Switch} from "react-router-dom";
 import {connect} from "react-redux"
 import NavBar from "./components/layout/navbar";
-
+import {Redirect} from "react-router-dom"
+import {Dashboard} from "@material-ui/icons";
 
 class App extends Component {
     render() {
         const {user} = this.props
+        if(!user) return <SignIn />
         return (
             <BrowserRouter>
-                <SignIn />
-                <NavBar/>
-                <Switch>
-                </Switch>
-                <ToastContainer autoClose={2000}/>
+                <div className="App">
+                    <NavBar/>
+                    <Switch>
+                        <Route exact path={"/"} component={Dashboard}/>
+                    </Switch>
+                </div>
             </BrowserRouter>
         )
     }
