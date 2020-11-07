@@ -1,25 +1,57 @@
 import React, {Component} from "react"
 import {connect} from "react-redux"
 import {signIn} from "../../store/actions/authActions"
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import Container from '@material-ui/core/Container';
+import clsx from 'clsx'
+import {
+    withStyles,
+    Button,
+    Link,
+    Grid,
+    Container,
+    Typography,
+    Avatar,
+    OutlinedInput,
+    InputAdornment,
+    TextField,
+    IconButton, FormControl, InputLabel
+} from "@material-ui/core"
+import {LockOutlined, Visibility, VisibilityOff} from "@material-ui/icons"
 
+const useStyles = (theme) => ({
+        paper: {
+            marginTop: theme.spacing(8),
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center'
+        },
+        margin: {
+            marginTop: theme.spacing(1)
+        },
+        avatar: {
+            margin: theme.spacing(1),
+            backgroundColor: theme.palette.secondary.main,
+        },
+        form: {
+            width: '100%',
+            marginTop: theme.spacing(1)
+        },
+        submit: {
+            margin: theme.spacing(3, 0, 2),
+        }
+    }
+)
 
 class SignIn extends Component {
 
     state = {
-        username: null,
-        password: null
+        username: '',
+        password: '',
+        showPassword: false
     }
 
     handleChange = (e) => {
         this.setState({
+            ...this.state,
             [e.target.id]: e.target.value
         })
     }
@@ -29,50 +61,77 @@ class SignIn extends Component {
         this.props.signIn(this.state)
     }
 
+    handleClickShowPassword = () => {
+        this.setState({
+            ...this.state,
+            showPassword: !this.state.showPassword
+        })
+    };
+
+    handleMouseDownPassword = (event) => {
+        event.preventDefault();
+    };
+
     render() {
+        const {classes} = this.props;
         return (
             <Container component="main" maxWidth="xs">
-                <div>
+                <div className={classes.paper}>
+                    <Avatar className={classes.avatar}>
+                        <LockOutlined/>
+                    </Avatar>
                     <Typography component="h1" variant="h5">
                         Allez on se connecte
                     </Typography>
-                    <form noValidate onSubmit={this.handleSubmit}>
+                    <form noValidate className={classes.form} onSubmit={this.handleSubmit}>
                         <TextField
-                            variant="outlined"
-                            margin="normal"
-                            required
+                            id={"username"}
+                            variant={"outlined"}
                             fullWidth
-                            id="username"
-                            label="Nom d'utilisateur"
-                            name="username"
-                            autoComplete="username"
+                            onChange={this.handleChange}
+                            required
+                            label={"Nom d'utilisateur"}
+                            name={"username"}
+                            type={"text"}
+                            autoComplete={"username"}
                             autoFocus
-                            onChange={this.handleChange}
                         />
-                        <TextField
-                            variant="outlined"
-                            margin="normal"
-                            required
-                            fullWidth
-                            name="password"
-                            label="Mot de passe"
-                            type="password"
-                            id="password"
-                            autoComplete="current-password"
-                            onChange={this.handleChange}
-                        />
+                        <FormControl variant={"outlined"} className={classes.margin} fullWidth>
+                            <InputLabel htmlFor={"password"}>Mot de passe *</InputLabel>
+                            <OutlinedInput
+                                className={classes.margin}
+                                id="password"
+                                type={this.state.showPassword ? 'text' : 'password'}
+                                onChange={this.handleChange}
+                                endAdornment={
+                                    <InputAdornment position="end">
+                                        <IconButton
+                                            aria-label="toggle password visibility"
+                                            onClick={this.handleClickShowPassword}
+                                            onMouseDown={this.handleMouseDownPassword}
+                                        >
+                                            {this.state.showPassword ? <Visibility/> : <VisibilityOff/>}
+                                        </IconButton>
+                                    </InputAdornment>
+
+                                }
+                                required
+                                labelWidth={100}
+                            />
+                        </FormControl>
                         <Button
                             type="submit"
                             fullWidth
                             variant="contained"
                             color="primary"
+                            className={classes.submit}
                         >
                             Se connecter
                         </Button>
                         <Grid container>
                             <Grid item xs>
                                 <Link href="#" variant="body2">
-                                  T'as oublié ton mot de passe ?
+                                    T'as oublié ton mot de passe ?
                                 </Link>
                             </Grid>
                         </Grid>
@@ -96,4 +155,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignIn)
+export default withStyles(useStyles)(connect(mapStateToProps, mapDispatchToProps)(SignIn))
