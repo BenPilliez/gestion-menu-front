@@ -15,3 +15,10 @@ export const signIn = (credentials) => {
         })
     }
 }
+
+export const signOut = () => {
+    return (dispatch) => {
+        localStorage.clear();
+        dispatch({type: "SIGNOUT_SUCCESS"})
+    }
+}

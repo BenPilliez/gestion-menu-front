@@ -6,18 +6,21 @@ import {BrowserRouter, Route, Switch} from "react-router-dom";
 import {connect} from "react-redux"
 import dashboard from "./components/dashboard/dashboard";
 import Jumbotron from "./components/layout/jumbotron";
+import Account from "./components/user/account";
 
 class App extends Component {
     render() {
         const {user} = this.props
         if (!user) return <div><SignIn/> <ToastContainer/></div>
+        console.log(user)
         return (
             <BrowserRouter>
                 <div className="App">
-                    <Jumbotron title={"Bon qu'est ce qu'on mange ce soir ?"} />
+                    <Jumbotron  />
                     <Switch>
                         <Route exact path={"/"} component={dashboard}/>
                         <Route path={'/signin'} component={SignIn} />
+                        <Route path={"/mon-compte"} component={Account} />
                     </Switch>
                     <ToastContainer/>
                 </div>

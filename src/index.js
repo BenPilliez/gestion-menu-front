@@ -10,23 +10,35 @@ import thunk from 'redux-thunk'
 import {axiosInstance, setAuthorization} from "./config/axiosConfig"
 import {toast} from "react-toastify";
 import CssBaseline from '@material-ui/core/CssBaseline';
-import SignIn from "./components/auth/SignIn";
 
 const store = createStore(rootReducers, applyMiddleware(thunk.withExtraArgument({axiosInstance, toast})))
 
-const token = localStorage.getItem('token');
+const token = localStorage.getItem('token')
 
 if (token) {
     setAuthorization(token)
 }
 
+// On maintient la connexion pendant 24h
+let hours = 24 // Reset when storage is more than 24hours
+let now = new Date().getTime()
+let setupTime = localStorage.getItem('setupTime')
+if (setupTime == null) {
+    localStorage.setItem('setupTime', now)
+} else {
+    if (now - setupTime > hours * 60 * 60 * 1000) {
+        localStorage.clear()
+        localStorage.setItem('setupTime', now)
+    }
+}
+
+
 ReactDOM.render(
-    <React.StrictMode>
         <Provider store={store}>
             <CssBaseline/>
             <App/>
-        </Provider>
-    </React.StrictMode>,
+        </Provider>,
+
     document.getElementById('root')
 );
 

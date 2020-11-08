@@ -1,13 +1,13 @@
 import React from "react"
-import {List, ListItemIcon, ListItemText, ListItemAvatar, Divider, ListItem, Avatar} from "@material-ui/core"
-import {AddCircleOutline, AccountBox} from '@material-ui/icons';
+import {List, ListItemIcon, ListItemText, ListItemAvatar, Divider, ListItem, Avatar, Button} from "@material-ui/core"
+import {AddCircleOutline, AccountBox, Home} from '@material-ui/icons';
 import clsx from "clsx"
 import {makeStyles} from "@material-ui/core/styles";
 import { Link as RouterLink } from 'react-router-dom';
 
-
 const SideBarLinks = (props) => {
 
+    console.log(props)
     const {user, anchor} = props
     const useStyles = makeStyles((theme) => ({
         avatar: {
@@ -39,7 +39,13 @@ const SideBarLinks = (props) => {
                                 src={process.env.REACT_APP_BASE_URL + "/static/avatars/" + user.avatarUrl}/>}
                 </ListItemAvatar> <Divider className={classes.margin2}/>
             </ListItem> : null}
-            <ListItem button className={classes.margin4} component={RouterLink} to={"/mon-compte"}>
+
+            <ListItem button className={classes.margin4} component={RouterLink} to={"/"}>
+                <ListItemIcon><Home/></ListItemIcon>
+                <ListItemText> Accueil </ListItemText>
+            </ListItem>
+
+            <ListItem button component={RouterLink} to={"/mon-compte"}>
                 <ListItemIcon><AddCircleOutline/></ListItemIcon>
                 <ListItemText> Mon compte </ListItemText>
             </ListItem>
@@ -48,8 +54,13 @@ const SideBarLinks = (props) => {
                 <ListItemText> Ajouter une proposition
                 </ListItemText>
             </ListItem>
+
+            <Divider />
+
+            <ListItem>
+              <Button color={"primary"} onClick={props.signOut}>Se déconnecter</Button>
+            </ListItem>
         </List>
     )
 }
-
 export default SideBarLinks
