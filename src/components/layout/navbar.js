@@ -23,7 +23,7 @@ const NavBar = (props) => {
 
     return (
         <div>
-            <Button onClick={toggleDrawer} color={"primary"} variant={"container"} startIcon={<Menu/>}>Menu</Button>
+            <Button onClick={toggleDrawer} variant={"contained"} color={"primary"} startIcon={<Menu/>}>Menu</Button>
             <Drawer role="presentation"
                     anchor={state.position}
                     onClick={toggleDrawer}

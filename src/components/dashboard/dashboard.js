@@ -1,13 +1,11 @@
 import React, {Component} from "react"
 import {connect} from "react-redux"
-import {Redirect} from "react-router-dom"
 
 class Dashboard extends Component {
     render() {
         const {user} = this.props
         return (
             <div>
-                <p>ALllo</p>
             </div>
         )
     }
@@ -15,7 +13,8 @@ class Dashboard extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        user: state.auth.user
+        user: state.auth.user,
+        menus: state.menus
     }
 }
 

@@ -4,21 +4,22 @@ import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {BrowserRouter, Route, Switch} from "react-router-dom";
 import {connect} from "react-redux"
-import NavBar from "./components/layout/navbar";
-import {Redirect} from "react-router-dom"
-import {Dashboard} from "@material-ui/icons";
+import dashboard from "./components/dashboard/dashboard";
+import Jumbotron from "./components/layout/jumbotron";
 
 class App extends Component {
     render() {
         const {user} = this.props
-        if(!user) return <SignIn />
+        if (!user) return <div><SignIn/> <ToastContainer/></div>
         return (
             <BrowserRouter>
                 <div className="App">
-                    <NavBar/>
+                    <Jumbotron title={"Bon qu'est ce qu'on mange ce soir ?"} />
                     <Switch>
-                        <Route exact path={"/"} component={Dashboard}/>
+                        <Route exact path={"/"} component={dashboard}/>
+                        <Route path={'/signin'} component={SignIn} />
                     </Switch>
+                    <ToastContainer/>
                 </div>
             </BrowserRouter>
         )

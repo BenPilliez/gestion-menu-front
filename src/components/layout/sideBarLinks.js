@@ -3,6 +3,8 @@ import {List, ListItemIcon, ListItemText, ListItemAvatar, Divider, ListItem, Ava
 import {AddCircleOutline, AccountBox} from '@material-ui/icons';
 import clsx from "clsx"
 import {makeStyles} from "@material-ui/core/styles";
+import { Link as RouterLink } from 'react-router-dom';
+
 
 const SideBarLinks = (props) => {
 
@@ -37,11 +39,11 @@ const SideBarLinks = (props) => {
                                 src={process.env.REACT_APP_BASE_URL + "/static/avatars/" + user.avatarUrl}/>}
                 </ListItemAvatar> <Divider className={classes.margin2}/>
             </ListItem> : null}
-            <ListItem button className={classes.margin4}>
+            <ListItem button className={classes.margin4} component={RouterLink} to={"/mon-compte"}>
                 <ListItemIcon><AddCircleOutline/></ListItemIcon>
                 <ListItemText> Mon compte </ListItemText>
             </ListItem>
-            <ListItem button>
+            <ListItem button component={RouterLink} to={"/create/propositions/"}>
                 <ListItemIcon><AccountBox/></ListItemIcon>
                 <ListItemText> Ajouter une proposition
                 </ListItemText>

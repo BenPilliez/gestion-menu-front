@@ -1,6 +1,7 @@
 import React, {Component} from "react"
 import {connect} from "react-redux"
 import {signIn} from "../../store/actions/authActions"
+import {Redirect} from "react-router-dom"
 import {
     withStyles,
     Button,
@@ -71,8 +72,11 @@ class SignIn extends Component {
         event.preventDefault();
     };
 
+
     render() {
-        const {classes} = this.props;
+        const {classes, user} = this.props
+        if(user) return <Redirect path="/" />
+
         return (
             <Container component="main" maxWidth="xs">
                 <div className={classes.paper}>
