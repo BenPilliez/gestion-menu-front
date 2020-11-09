@@ -5,6 +5,7 @@ import {
     defaultJumbro
 } from "../../store/actions/jumbotronActions"
 import {connect} from "react-redux"
+import {Redirect} from "react-router-dom";
 
 const Account = (props) => {
 
@@ -18,7 +19,7 @@ const Account = (props) => {
             props.defaultJumbotron()
         }
     })
-
+    if (!user) return <Redirect to={"/signin"}/>
     return (
         <div>
         </div>

@@ -7,12 +7,12 @@ import {connect} from "react-redux"
 import dashboard from "./components/dashboard/dashboard";
 import Jumbotron from "./components/layout/jumbotron";
 import Account from "./components/user/account";
+import detailMenu from "./components/propositions/detailMenu"
 
 class App extends Component {
     render() {
         const {user} = this.props
         if (!user) return <div><SignIn/> <ToastContainer/></div>
-        console.log(user)
         return (
             <BrowserRouter>
                 <div className="App">
@@ -21,6 +21,7 @@ class App extends Component {
                         <Route exact path={"/"} component={dashboard}/>
                         <Route path={'/signin'} component={SignIn} />
                         <Route path={"/mon-compte"} component={Account} />
+                        <Route path={"/details/:day"} component={detailMenu} />
                     </Switch>
                     <ToastContainer/>
                 </div>

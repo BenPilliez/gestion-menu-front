@@ -16,6 +16,7 @@ import {
     IconButton, FormControl, InputLabel
 } from "@material-ui/core"
 import {LockOutlined, Visibility, VisibilityOff} from "@material-ui/icons"
+import {ToastContainer} from "react-toastify";
 
 const useStyles = (theme) => ({
         paper: {
@@ -75,7 +76,8 @@ class SignIn extends Component {
 
     render() {
         const {classes, user} = this.props
-        if(user) return <Redirect path="/" />
+
+        if (user) return <Redirect to={"/"} />
 
         return (
             <Container component="main" maxWidth="xs">
@@ -140,6 +142,7 @@ class SignIn extends Component {
                         </Grid>
                     </form>
                 </div>
+                <ToastContainer/>
             </Container>
         );
     }

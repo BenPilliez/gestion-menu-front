@@ -1,23 +1,38 @@
 import React, {Component} from "react"
 import {connect} from "react-redux"
+import {getMenusDays} from "../../store/actions/menuActions";
+import queryString from "url"
 
-class detailMenu extends Component{
+class detailMenu extends Component {
+
+    componentDidMount() {
+        this.props.getMenusDays(this.props.day,this.props.query.week)
+    }
 
     render() {
-        return{
+        return (
+            <div>
 
-        }
+            </div>
+        )
+
     }
 }
 
-/*const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state, ownProps) => {
     const day = ownProps.match.params.day
-    const menus = state.menus
-    const menu = menus ?
+    const query = queryString.parse(ownProps.location.search,true).query;
 
     return {
-        menu: menu
+        day: day,
+        query: query
     }
-}*/
+}
 
-export default connect()(detailMenu)
+const mapDispatchToProps = (dispatch) => {
+    return {
+        getMenusDays: (day, query) => dispatch(getMenusDays(day,query))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(detailMenu)

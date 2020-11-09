@@ -19,6 +19,13 @@ const authReducer = (state = initState, action) => {
                 pending: false,
                 menus: action.menus
             }
+        case 'LOAD_DAY_MENU':
+            return {
+                ...state,
+                error: null,
+                pending: false,
+                menus: action.menus
+            }
         case 'LOAD_MENU_ERROR':
             return {
                 ...state,
