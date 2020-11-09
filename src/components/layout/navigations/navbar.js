@@ -1,6 +1,6 @@
 import React from "react"
 import {connect} from "react-redux"
-import {Drawer, Button, Grid} from "@material-ui/core"
+import {Button, Drawer, Grid} from "@material-ui/core"
 import {Menu} from "@material-ui/icons"
 import SideBarLinks from "./sideBarLinks";
 import {isMobile} from "react-device-detect"
@@ -9,7 +9,7 @@ import {signOut} from "../../../store/actions/authActions";
 
 
 const useStyles = makeStyles((theme) => ({
-    buttonNav:{
+    buttonNav: {
         padding: theme.spacing(3)
     }
 }))
@@ -20,6 +20,7 @@ const NavBar = (props) => {
         sideBarState: false,
         position: isMobile ? 'bottom' : 'right'
     })
+
     const classes = useStyles()
 
     const toggleDrawer = () => {
@@ -33,7 +34,7 @@ const NavBar = (props) => {
     return (
         <div>
             <Grid container direction={"row"} justify={"flex-end"}>
-                <Grid item className={classes.buttonNav}  >
+                <Grid item className={classes.buttonNav}>
                     <Button onClick={toggleDrawer} variant={"contained"} color={"primary"}
                             startIcon={<Menu/>}>Menu</Button>
                 </Grid>
@@ -63,4 +64,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(NavBar)
+export default connect(mapStateToProps, mapDispatchToProps)(NavBar)

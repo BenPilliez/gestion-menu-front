@@ -34,7 +34,7 @@ const CarouselItems = (props) => {
                         </Typography>
                     </CardContent>
                     <CardActions>
-                        <Button component={RouterLink} to={"/details/" + header.toLowerCase()} startIcon={<Visibility />} variant={"contained"} color={"primary"}>Voir le menu</Button>
+                        <Button component={RouterLink} to={`/details/${header}?week=45`} startIcon={<Visibility />} variant={"contained"} color={"primary"}>Voir le menu</Button>
                     </CardActions>
                 </Grid>
             </Card>

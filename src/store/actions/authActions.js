@@ -4,7 +4,7 @@ export const signIn = (credentials) => {
     return (dispatch, getState, {axiosInstance, toast}) => {
         axiosInstance({url: process.env.REACT_APP_BASE_URL + '/auth/signin', data: credentials, method: 'POST'})
             .then((res) => {
-                setAuthorization(res.data.token)
+                setAuthorization(axiosInstance,res.data.token)
                 localStorage.setItem('user', JSON.stringify(res.data.user))
                 localStorage.setItem('token', res.data.token)
                 toast.success('Tu es bien connecté')

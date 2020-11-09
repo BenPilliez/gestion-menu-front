@@ -1,36 +1,14 @@
 const initState = {
-    error: null,
-    pending: false,
-    menus: null
+    propositions: null,
 }
 
 const authReducer = (state = initState, action) => {
     switch (action.type) {
-        case 'LOAD_MENU_PENDING':
-            console.error('loading menus')
-            return {
-                ...state,
-                pending: true
-            }
-        case 'LOAD_MENU_SUCCESS':
-            return {
-                ...state,
-                error: null,
-                pending: false,
-                menus: action.menus
-            }
         case 'LOAD_DAY_MENU':
+            console.log('load menu details')
             return {
                 ...state,
-                error: null,
-                pending: false,
-                menus: action.menus
-            }
-        case 'LOAD_MENU_ERROR':
-            return {
-                ...state,
-                error: action.err,
-                pending: false
+                propositions: action.propositions
             }
         default:
             return state

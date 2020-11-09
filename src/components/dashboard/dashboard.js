@@ -1,6 +1,5 @@
 import React, {Component} from "react"
 import {connect} from "react-redux"
-import moment from "moment"
 import CarouselComponent from "../Carousel/carousel"
 import background from "../../img/background.jpg"
 import {Container, Grid, FormControl, Select, InputLabel, MenuItem} from "@material-ui/core";
@@ -85,7 +84,7 @@ class Dashboard extends Component {
             <div>
                 <Container style={{marginTop: 10}}>
                     <Grid container justify={"center"}>
-                        <Grid item xs={12} lg={6} md={6} sm={12}>
+                        <Grid item xs={12} lg={6} md={12} sm={12}>
                             <FormControl size={"medium"} fullWidth={true}>
                                 <InputLabel id="week-select">Selectione une semaine </InputLabel>
                                 <Select

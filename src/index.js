@@ -7,17 +7,17 @@ import {applyMiddleware, createStore} from 'redux';
 import rootReducers from './store/reducers/rootReducers'
 import {Provider} from 'react-redux'
 import thunk from 'redux-thunk'
-import {axiosInstance, setAuthorization} from "./config/axiosConfig"
+import {axiosInstance,setAuthorization} from "./config/axiosConfig"
 import {toast} from "react-toastify";
 import CssBaseline from '@material-ui/core/CssBaseline';
 
-const store = createStore(rootReducers, applyMiddleware(thunk.withExtraArgument({axiosInstance, toast})))
-
 const token = localStorage.getItem('token')
 
-if (token) {
-    setAuthorization(token)
+if (token !== null) {
+    setAuthorization(axiosInstance,token)
 }
+
+const store = createStore(rootReducers, applyMiddleware(thunk.withExtraArgument({axiosInstance, toast})))
 
 // On maintient la connexion pendant 24h
 let hours = 24 // Reset when storage is more than 24hours
