@@ -82,7 +82,7 @@ class Dashboard extends Component {
         ]
         return (
             <div>
-                <Container style={{marginTop: 10}}>
+                <Container style={{marginTop: 10,marginBottom: 100}}>
                     <Grid container justify={"center"}>
                         <Grid item xs={12} lg={6} md={12} sm={12}>
                             <FormControl size={"medium"} fullWidth={true}>

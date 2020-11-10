@@ -1,33 +1,26 @@
 import React, {Component} from "react"
 import {connect} from "react-redux"
 import queryString from "url"
-import {Avatar, Box, Container, Grid, Typography,CardMedia,CardHeader,Card,CardContent} from "@material-ui/core"
+import { Box, Container, Grid, Typography} from "@material-ui/core"
 import {getMenusDays} from "../../store/actions/menuActions"
 import Skeleton from '@material-ui/lab/Skeleton'
 import {withStyles} from "@material-ui/core/styles"
-import moment from "moment"
+import {AddCircle} from "@material-ui/icons";
 import 'moment/locale/fr'
-
+import Button from "@material-ui/core/Button";
+import {Link as RouterLink} from "react-router-dom";
+import CardLists from "../layout/cardsList";
 
 const useStyles = (theme) => ({
-    root: {
-        maxWidth: 345,
+    flex:{
+        display: 'flex',
+        flexDirection:'column',
+        alignItems: 'center',
+        justifyContent:'center'
     },
-    media: {
-        height: 0,
-        paddingTop: '56.25%', // 16:9
+    button: {
+        margin: theme.spacing(1),
     },
-    expand: {
-        transform: 'rotate(0deg)',
-        marginLeft: 'auto',
-        transition: theme.transitions.create('transform', {
-            duration: theme.transitions.duration.shortest,
-        }),
-    },
-    expandOpen: {
-        transform: 'rotate(180deg)',
-    },
-
 })
 
 class detailMenu extends Component {
@@ -40,35 +33,8 @@ class detailMenu extends Component {
         const {propositions, classes} = this.props
 
         const propos = propositions ? propositions.map((item) => {
-            const url = process.env.REACT_APP_BASE_URL + "/static/avatars/" + item.imageUrl
             return (
-                <Grid key={item.id} item xs={12} lg={6} md={6} sm={12} style={{marginTop: 15}}>
-                    <Card className={classes.root}>
-                        <CardHeader
-                            avatar={ item.user.avatarUrl === null ?
-                                <Avatar aria-label="recipe" className={classes.avatar}>
-                                    {item.user.username}
-                                </Avatar> :
-                                <Avatar className={classes.large} alt={"avatar" + item.user.username}
-                                 src={process.env.REACT_APP_BASE_URL + "/static/avatars/" + item.user.avatarUrl}/>
-                            }
-                            title={item.title}
-                            subheader={moment(item.createdAt).locale('fr').format('LL')}
-                        >
-                        </CardHeader>
-                        <CardMedia
-                            className={classes.media}
-                            image= {`${process.env.REACT_APP_BASE_URL}/static/avatars/${item.imageUrl}`}
-                            title={item.title}
-                        >
-                        </CardMedia>
-                        <CardContent>
-                            <Typography variant="body2" color="textSecondary" component="p">
-                                {item.content}
-                            </Typography>
-                        </CardContent>
-                    </Card>
-                </Grid>
+                <CardLists key={item.id} proposition={item}/>
             )
         }) : (
             <Box pt={0.5}>
@@ -79,9 +45,25 @@ class detailMenu extends Component {
 
         return (
             <div>
-                <Container style={{marginTop: 100}}>
+                <Container style={{marginTop: 100, marginBottom: 100}}>
                     <Grid container justify={"center"}>
-                        {propositions && propositions.length > 0 ? propos : <div>Bah alors on mange quoi ?</div> }
+                        {propositions && propositions.length > 0 ? propos :
+                            <div className={classes.flex}>
+                            <Typography variant={"h3"}>
+                                Bah alors on mange quoi ?
+                            </Typography>
+                                <Button
+                                    component={RouterLink}
+                                    to={"/create/propositions/"}
+                                    variant="contained"
+                                    color="primary"
+                                    size="large"
+                                    className={classes.button}
+                                    startIcon={<AddCircle />}
+                                >
+                                    Ajouter un proposition
+                                </Button>
+                        </div> }
                     </Grid>
                 </Container>
             </div>
