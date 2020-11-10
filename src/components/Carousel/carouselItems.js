@@ -3,6 +3,8 @@ import {makeStyles} from "@material-ui/core/styles";
 import {Visibility} from "@material-ui/icons";
 import {Paper, Card, CardMedia, CardContent, CardActions, Typography, Grid, Button} from "@material-ui/core"
 import {Link as RouterLink} from "react-router-dom";
+import moment from "moment";
+moment.locale('fr')
 
 const CarouselItems = (props) => {
     const {header, content, media} = props.item
@@ -34,7 +36,7 @@ const CarouselItems = (props) => {
                         </Typography>
                     </CardContent>
                     <CardActions>
-                        <Button component={RouterLink} to={`/details/${header}?week=45`} startIcon={<Visibility />} variant={"contained"} color={"primary"}>Voir le menu</Button>
+                        <Button component={RouterLink} to={`/details/${header}?week=${moment().week()}`} startIcon={<Visibility />} variant={"contained"} color={"primary"}>Voir le menu</Button>
                     </CardActions>
                 </Grid>
             </Card>

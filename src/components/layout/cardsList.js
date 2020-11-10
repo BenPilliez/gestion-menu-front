@@ -51,7 +51,7 @@ const CardLists = ({proposition}) => {
                 </CardHeader>
                 <CardMedia
                     className={classes.media}
-                    image= {`${process.env.REACT_APP_BASE_URL}/static/avatars/${proposition.imageUrl}`}
+                    image= {`${process.env.REACT_APP_BASE_URL}/static/propositions/${proposition.imageUrl}`}
                     title={proposition.title}
                 >
                 </CardMedia>

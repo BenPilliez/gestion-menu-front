@@ -10,6 +10,8 @@ const authReducer = (state = initState, action) => {
                 ...state,
                 propositions: action.propositions
             }
+        case 'CREATE_MENU':
+            return state
         default:
             return state
     }
