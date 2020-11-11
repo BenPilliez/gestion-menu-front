@@ -10,6 +10,7 @@ import 'moment/locale/fr'
 import Button from "@material-ui/core/Button";
 import {Link as RouterLink} from "react-router-dom";
 import CardLists from "../layout/cardsList";
+import io from "socket.io-client"
 
 const useStyles = (theme) => ({
     flex:{
@@ -23,10 +24,19 @@ const useStyles = (theme) => ({
     },
 })
 
+let socket
+
 class detailMenu extends Component {
 
     componentDidMount() {
+       /* socket = io(process.env.REACT_APP_BASE_URL)
+        socket.emit("initial_data");
+        socket.on("get_data", this.getData);*/
         this.props.getMenusDays(this.props.day, this.props.query.week)
+    }
+
+    componentWillUnmount() {
+        socket.off("get_data");
     }
 
     render() {
