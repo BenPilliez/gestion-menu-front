@@ -58,9 +58,9 @@ class addMenuComponent extends Component {
     handleSubmit = (e) => {
         e.preventDefault()
         const formData = converFormToFormData(this.state)
-        console.log(this.props)
-        /*this.props.add(formData)
-        this.props.history.push(`/details/${this.state.day}?week=${this.state.week}`)*/
+
+        this.props.add(formData)
+        this.props.history.push(`/`)
     }
 
     getDetailWeek = () => {
