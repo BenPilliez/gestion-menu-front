@@ -2,7 +2,7 @@ export const getMenusDays = (day, weekNumber) => {
     return (dispatch, getState, {axiosInstance, toast}) => {
         axiosInstance({url: `${process.env.REACT_APP_BASE_URL}/propositions/${day}?week=${weekNumber}`, method: 'GET'})
             .then((res) => {
-                dispatch({type: "LOAD_DAY_MENU", propositions: res.data.rows})
+                dispatch({type: "LOAD_DAY_MENU", propositions: res.data.rows, day:day, weekNumber:weekNumber})
             })
             .catch((error) => {
                 console.log(error.response)
@@ -21,7 +21,7 @@ export const addMenu = (form) => {
                 'Content-Type': 'multipart/form-data'
             }})
             .then((res) => {
-                dispatch({type: "CREATE_MENU", propositions: res.data})
+                dispatch({type: "CREATE_MENU", propositions: res.data, day:res.data.day, weekNumber:res.data.week})
                 toast.success('Ta proposition a bien été ajouté')
             })
             .catch((error) => {

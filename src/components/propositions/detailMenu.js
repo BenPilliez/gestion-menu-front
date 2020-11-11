@@ -31,7 +31,6 @@ class detailMenu extends Component {
 
     render() {
         const {propositions, classes} = this.props
-
         const propos = propositions ? propositions.map((item) => {
             return (
                 <CardLists key={item.id} proposition={item}/>
@@ -79,7 +78,7 @@ const mapStateToProps = (state, ownProps) => {
     return {
         day: day,
         query: query,
-        propositions: state.menus.propositions
+        propositions: state.menus.propositions[`${day}-${query.week}`]
     }
 }
 
