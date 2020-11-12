@@ -1,5 +1,5 @@
 import React, {Component} from "react"
-import {Button, Container, Grid, Switch, TextField, Typography} from "@material-ui/core"
+import {Button, Container, Grid, Switch, TextField, Typography, Paper} from "@material-ui/core"
 import moment from "moment"
 import {DropzoneArea} from "material-ui-dropzone";
 import {addMenu} from "../../store/actions/menuActions";
@@ -65,7 +65,7 @@ class addMenuComponent extends Component {
     handleChangeEditor = (html) => {
         this.setState({
             ...this.state,
-           description: html
+            description: html
         })
     }
 
@@ -81,19 +81,22 @@ class addMenuComponent extends Component {
         const date = this.props.day && this.props.day ? moment().day(this.state.day).week(this.state.week) : moment()
 
         return (
-            <Container style={{marginTop: 15, marginBottom: 100}}>
 
+            <Container style={{marginTop: 15, marginBottom: 100}}>
                 <form ref={'form'} noValidate onSubmit={this.handleSubmit}>
                     <Grid container spacing={4}>
                         <Grid item xs={12} md={12} lg={12} sm={12}>
-                            <Calendar
-                                prev2Label={<SkipPrevious/>}
-                                prevLabel={<NavigateBefore/>}
-                                nextLabel={<NavigateNext/>}
-                                next2Label={<SkipNext />}
-                                onChange={this.handleChangeDay}
-                                value={new Date(date)}
-                                maxDate={this.state.maxDate}/>
+                            <Paper>
+                                <Calendar
+                                    prev2Label={<SkipPrevious/>}
+                                    prevLabel={<NavigateBefore/>}
+                                    nextLabel={<NavigateNext/>}
+                                    next2Label={<SkipNext/>}
+                                    onChange={this.handleChangeDay}
+                                    tileClassName={'tile'}
+                                    value={new Date(date)}
+                                    maxDate={this.state.maxDate}/>
+                            </Paper>
                         </Grid>
 
                         <Grid item xs={12} md={12} lg={12} sm={12}>
