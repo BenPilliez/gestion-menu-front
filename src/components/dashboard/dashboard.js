@@ -1,110 +1,102 @@
 import React, {Component} from "react"
 import {connect} from "react-redux"
-import CarouselComponent from "../Carousel/carousel"
-import background from "../../img/background.jpg"
-import {Container, Grid, FormControl, Select, InputLabel, MenuItem} from "@material-ui/core";
+import {Box, Container, Grid, withStyles} from "@material-ui/core"
+import Calendar from "react-calendar"
+import 'react-calendar/dist/Calendar.css'
+import {getMenusDays} from "../../store/actions/menuActions"
+import moment from "moment"
+import Button from "@material-ui/core/Button";
+import {Link as RouterLink} from "react-router-dom";
+import {AddCircle} from "@material-ui/icons";
+import CardLists from "../layout/cardsList";
+import Skeleton from "@material-ui/lab/Skeleton";
 
+moment.locale('fr')
+
+const maxDate = moment().week(moment().weeksInYear()).endOf('isoWeek').format('L')
+
+const useStyles = (theme) => ({
+    flex: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    button: {
+        margin: theme.spacing(1),
+    },
+})
 
 class Dashboard extends Component {
 
     state = {
-        week: ''
+        week: moment().week(),
+        day: moment().format('dddd'),
+        maxDate: new Date(maxDate)
     }
 
-    handleChange = (e) => {
-        this.setState({
-            week: e.target.value
-        })
+    componentDidMount() {
+        this.props.getMenus(this.state.day, this.state.week)
     }
+
+    handleChange = (nextValue) => {
+
+        let date = moment(nextValue)
+        let week = date.week()
+        let day = date.format('dddd')
+
+        this.setState({
+            ...this.state,
+            day: day,
+            week: week
+        })
+
+        this.props.getMenus(day, week)
+
+    }
+
 
     render() {
-        const options = {
-            autoPlay: false,
-            animation: 'slide'
-        }
-        const items = [
-            {
-                header: "Lundi",
-                media: {
-                    url: background,
-                    title: "background"
-                },
-                content: "Bon qu'est qu'on mange de bon ?"
-            },
-            {
-                header: "Mardi",
-                media: {
-                    url: background,
-                    title: "background"
-                },
-                content: "Bon qu'est qu'on mange de bon ?"
-            },
-            {
-                header: "Mercredi",
-                media: {
-                    url: background,
-                    title: "background"
-                },
-                content: "Bon qu'est qu'on mange de bon ?"
-            },
-            {
-                header: "Jeudi",
-                media: {
-                    url: background,
-                    title: "background"
-                },
-                content: "Bon qu'est qu'on mange de bon ?"
-            },
-            {
-                header: "Vendredi",
-                media: {
-                    url: background,
-                    title: "background"
-                },
-                content: "Bon qu'est qu'on mange de bon ?"
-            },
-            {
-                header: "Samedi",
-                media: {
-                    url: background,
-                    title: "background"
-                },
-                content: "Bon qu'est qu'on mange de bon ?"
-            },
-            {
-                header: "Dimanche",
-                media: {
-                    url: background,
-                    title: "background"
-                },
-                content: "Bon qu'est qu'on mange de bon ?"
-            }
-        ]
+
+        const {propositions, classes} = this.props
+
+        const propos = propositions ? propositions.map((item) => {
+            return (
+                <CardLists key={item.id} proposition={item}/>
+            )
+        }) : (
+            <Box pt={0.5}>
+                <Skeleton/>
+                <Skeleton width="60%"/>
+            </Box>
+        )
+
         return (
             <div>
-                <Container style={{marginTop: 10,marginBottom: 100}}>
-                    <Grid container justify={"center"}>
-                        <Grid item xs={12} lg={6} md={12} sm={12}>
-                            <FormControl size={"medium"} fullWidth={true}>
-                                <InputLabel id="week-select">Selectione une semaine </InputLabel>
-                                <Select
-                                    labelId="week-select"
-                                    id="week"
-                                    value={this.state.week}
-                                    onChange={this.handleChange}
-                                >
-                                    <MenuItem value={10}>Ten</MenuItem>
-                                    <MenuItem value={20}>Twenty</MenuItem>
-                                    <MenuItem value={30}>Thirty</MenuItem>
-                                </Select>
-                            </FormControl>
+                <Container  style={{marginTop: 10, marginBottom: 100}}>
+                    <Grid container >
+                        <Grid item  xs={12} lg={12} md={12} sm={12}>
+                            <Calendar className={"calendar"} onChange={this.handleChange} maxDate={this.state.maxDate}/>
                         </Grid>
                     </Grid>
+                </Container>
 
-                    <Grid style={{marginTop: 40}} container justify={"center"}>
-                        <Grid item xs={6} lg={6} md={6} sm={6}>
-                            <CarouselComponent options={options} items={items}/>
+                <Container  style={{marginTop: 100, marginBottom: 100}}>
+                    <Grid container >
+                        <Grid item className={classes.flex} xs={12} lg={12} md={12} sm={12}>
+                            <Button
+                                component={RouterLink}
+                                to={`/create/propositions?day=${this.state.day}&week=${this.state.week}`}
+                                variant="contained"
+                                color="primary"
+                                size="large"
+                                className={classes.button}
+                                startIcon={<AddCircle/>}
+                            >
+                                Ajouter un proposition
+                            </Button>
                         </Grid>
+                        {propositions && propositions.length > 0 ? propos : null}
                     </Grid>
                 </Container>
             </div>
@@ -114,9 +106,15 @@ class Dashboard extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        menus: state.menus
+        propositions: state.menus.propositions
     }
 }
 
-export default connect(mapStateToProps)(Dashboard)
+const mapDispatchToProps = (dispatch) => {
+    return {
+        getMenus: (day, query) => dispatch(getMenusDays(day, query))
+    }
+}
+
+export default withStyles(useStyles)(connect(mapStateToProps, mapDispatchToProps)(Dashboard))
 

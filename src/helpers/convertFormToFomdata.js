@@ -4,13 +4,14 @@ export const converFormToFormData = (form) => {
         if (typeof form[key] === 'object') {
             if (form[key].length > 1) {
                 form[key].map((item) => {
-                    return formData.append(key, item, item.name)
+                    return formData.append(key, item)
                 })
             } else {
-                formData.append(key, form[key], form[key].name)
+                formData.append(key, form[key])
             }
 
         } else {
+
             formData.append(key, form[key])
         }
     }

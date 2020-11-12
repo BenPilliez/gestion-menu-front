@@ -18,4 +18,12 @@ code {
   max-width: 500px;
 }
 
+.react-calendar{
+  width: 100% !important
+}
+
+.ql-editor {
+  min-height: 18em;
+}
+
 

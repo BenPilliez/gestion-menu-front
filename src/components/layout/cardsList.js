@@ -2,9 +2,20 @@ import React from "react"
 import {Avatar, Card, CardContent, CardHeader, CardMedia, Grid, Typography} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import moment from "moment";
+import clsx from "clsx";
+import {ExpandMore} from "@material-ui/icons";
+import CardActions from "@material-ui/core/CardActions";
+import IconButton from "@material-ui/core/IconButton";
+import Collapse from "@material-ui/core/Collapse";
 moment.locale('fr')
 
 const CardLists = ({proposition}) => {
+
+    const [expanded, setExpanded] = React.useState(false);
+
+    const handleExpandClick = () => {
+        setExpanded(!expanded);
+    };
 
     const useStyles = makeStyles((theme) => ({
         root: {
@@ -20,12 +31,6 @@ const CardLists = ({proposition}) => {
             transition: theme.transitions.create('transform', {
                 duration: theme.transitions.duration.shortest,
             }),
-        },
-        flex:{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center'
         },
         expandOpen: {
             transform: 'rotate(180deg)',
@@ -46,7 +51,7 @@ const CardLists = ({proposition}) => {
                                 src={process.env.REACT_APP_BASE_URL + "/static/avatars/" + proposition.user.avatarUrl}/>
                     }
                     title={proposition.title}
-                    subheader={moment(proposition.createdAt).locale('fr').format('LL')}
+                    subheader={moment().day(proposition.day).week(proposition.week).format('LL')}
                 >
                 </CardHeader>
                 <CardMedia
@@ -60,6 +65,23 @@ const CardLists = ({proposition}) => {
                         {proposition.content}
                     </Typography>
                 </CardContent>
+                <CardActions disableSpacing>
+                    <IconButton
+                        className={clsx(classes.expand, {
+                            [classes.expandOpen]: expanded,
+                        })}
+                        onClick={handleExpandClick}
+                        aria-expanded={expanded}
+                        aria-label="Description"
+                    >
+                        <ExpandMore />
+                    </IconButton>
+                </CardActions>
+                <Collapse in={expanded} timeout="auto" unmountOnExit>
+                    <CardContent >
+                        <span dangerouslySetInnerHTML={{__html: proposition.description}}/>
+                    </CardContent>
+                </Collapse>
             </Card>
         </Grid>
     )
