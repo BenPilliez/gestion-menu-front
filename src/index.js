@@ -7,14 +7,16 @@ import {applyMiddleware, createStore} from 'redux';
 import rootReducers from './store/reducers/rootReducers'
 import {Provider} from 'react-redux'
 import thunk from 'redux-thunk'
-import {axiosInstance,setAuthorization} from "./config/axiosConfig"
+import {axiosInstance, setAuthorization} from "./config/axiosConfig"
 import {toast} from "react-toastify";
 import CssBaseline from '@material-ui/core/CssBaseline';
+import {ThemeProvider} from "@material-ui/styles";
+import theme from "./config/theme";
 
 const token = localStorage.getItem('token')
 
 if (token !== null) {
-    setAuthorization(axiosInstance,token)
+    setAuthorization(axiosInstance, token)
 }
 
 const store = createStore(rootReducers, applyMiddleware(thunk.withExtraArgument({axiosInstance, toast})))
@@ -32,12 +34,13 @@ if (setupTime == null) {
     }
 }
 
-
 ReactDOM.render(
+    <ThemeProvider theme={theme}>
         <Provider store={store}>
             <CssBaseline/>
             <App/>
-        </Provider>,
+        </Provider>
+    </ThemeProvider>,
 
     document.getElementById('root')
 );

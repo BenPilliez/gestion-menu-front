@@ -1,17 +1,15 @@
 import React, {Component} from "react"
 import {connect} from "react-redux"
-import {Box, Container, Grid, withStyles} from "@material-ui/core"
+import {Box, Container, Grid, withStyles,Button,IconButton} from "@material-ui/core"
 import Calendar from "react-calendar"
 import 'react-calendar/dist/Calendar.css'
 import {getMenusDays} from "../../store/actions/menuActions"
 import moment from "moment"
-import Button from "@material-ui/core/Button";
 import {Link as RouterLink} from "react-router-dom";
-import {AddCircle} from "@material-ui/icons";
+import {AddCircle,NavigateNext,NavigateBefore,SkipPrevious, SkipNext } from "@material-ui/icons";
 import CardLists from "../layout/cardsList";
 import Skeleton from "@material-ui/lab/Skeleton";
-
-moment.locale('fr')
+import "moment/locale/fr"
 
 const maxDate = moment().week(moment().weeksInYear()).endOf('isoWeek').format('L')
 
@@ -40,6 +38,7 @@ class Dashboard extends Component {
     }
 
     handleChange = (nextValue) => {
+        moment.locale('fr')
 
         let date = moment(nextValue)
         let week = date.week()
@@ -76,11 +75,17 @@ class Dashboard extends Component {
                 <Container  style={{marginTop: 10, marginBottom: 100}}>
                     <Grid container >
                         <Grid item  xs={12} lg={12} md={12} sm={12}>
-                            <Calendar className={"calendar"} onChange={this.handleChange} maxDate={this.state.maxDate}/>
+                            <Calendar
+                                prev2Label={<SkipPrevious/>}
+                                prevLabel={<NavigateBefore/>}
+                                nextLabel={<NavigateNext/>}
+                                next2Label={<SkipNext />}
+                                className={"calendar"}
+                                onChange={this.handleChange}
+                                maxDate={this.state.maxDate}/>
                         </Grid>
                     </Grid>
                 </Container>
-
                 <Container  style={{marginTop: 100, marginBottom: 100}}>
                     <Grid container >
                         <Grid item className={classes.flex} xs={12} lg={12} md={12} sm={12}>

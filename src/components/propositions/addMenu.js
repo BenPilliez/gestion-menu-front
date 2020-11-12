@@ -10,11 +10,10 @@ import 'react-calendar/dist/Calendar.css'
 import queryString from "url";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-
-moment.locale('fr')
+import {NavigateBefore, NavigateNext, SkipNext, SkipPrevious} from "@material-ui/icons";
+import "moment/locale/fr"
 
 const maxDate = moment().week(moment().weeksInYear()).endOf('isoWeek').format('L')
-
 
 class addMenuComponent extends Component {
 
@@ -87,7 +86,14 @@ class addMenuComponent extends Component {
                 <form ref={'form'} noValidate onSubmit={this.handleSubmit}>
                     <Grid container spacing={4}>
                         <Grid item xs={12} md={12} lg={12} sm={12}>
-                            <Calendar onChange={this.handleChangeDay} value={new Date(date)} maxDate={this.state.maxDate}/>
+                            <Calendar
+                                prev2Label={<SkipPrevious/>}
+                                prevLabel={<NavigateBefore/>}
+                                nextLabel={<NavigateNext/>}
+                                next2Label={<SkipNext />}
+                                onChange={this.handleChangeDay}
+                                value={new Date(date)}
+                                maxDate={this.state.maxDate}/>
                         </Grid>
 
                         <Grid item xs={12} md={12} lg={12} sm={12}>
