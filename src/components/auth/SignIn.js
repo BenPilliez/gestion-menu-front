@@ -80,7 +80,7 @@ class SignIn extends Component {
         if (user) return <Redirect to={"/"} />
 
         return (
-            <Container component="main" maxWidth="xs">
+            <Container >
                 <div className={classes.paper}>
                     <Avatar className={classes.avatar}>
                         <LockOutlined/>

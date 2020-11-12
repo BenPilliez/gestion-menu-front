@@ -1,6 +1,6 @@
 import React from "react"
 import {List, ListItemIcon, ListItemText, ListItemAvatar, Divider, ListItem, Avatar, Button} from "@material-ui/core"
-import {AddCircleOutline, AccountBox, Home} from '@material-ui/icons';
+import {AddCircleOutline, AccountBox, Home, ExitToApp} from '@material-ui/icons';
 import {makeStyles} from "@material-ui/core/styles";
 import { Link as RouterLink } from 'react-router-dom';
 import clsx from "clsx"
@@ -60,7 +60,7 @@ const SideBarLinks = (props) => {
             <Divider  />
 
             <ListItem  className={clsx(classes.button, classes.margin4)} >
-              <Button variant={"contained"} color={"secondary"} onClick={props.signOut}>Se déconnecter</Button>
+              <Button variant={"contained"} color={"secondary"} endIcon={<ExitToApp/>} onClick={props.signOut}>Se déconnecter</Button>
             </ListItem>
         </List>
     )
