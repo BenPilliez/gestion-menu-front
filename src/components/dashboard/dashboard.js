@@ -1,15 +1,16 @@
 import React, {Component} from "react"
 import {connect} from "react-redux"
-import {Box, Container, Grid, withStyles,Button,IconButton} from "@material-ui/core"
+import {Box, Button, Container, Grid, withStyles} from "@material-ui/core"
 import Calendar from "react-calendar"
 import 'react-calendar/dist/Calendar.css'
 import {getMenusDays} from "../../store/actions/menuActions"
 import moment from "moment"
 import {Link as RouterLink} from "react-router-dom";
-import {AddCircle,NavigateNext,NavigateBefore,SkipPrevious, SkipNext } from "@material-ui/icons";
+import {AddCircle, NavigateBefore, NavigateNext, SkipNext, SkipPrevious} from "@material-ui/icons";
 import CardLists from "../layout/cardsList";
 import Skeleton from "@material-ui/lab/Skeleton";
 import "moment/locale/fr"
+import Paper from "@material-ui/core/Paper";
 
 const maxDate = moment().week(moment().weeksInYear()).endOf('isoWeek').format('L')
 
@@ -72,22 +73,26 @@ class Dashboard extends Component {
 
         return (
             <div>
-                <Container  style={{marginTop: 10, marginBottom: 100}}>
-                    <Grid container >
-                        <Grid item  xs={12} lg={12} md={12} sm={12}>
-                            <Calendar
-                                prev2Label={<SkipPrevious/>}
-                                prevLabel={<NavigateBefore/>}
-                                nextLabel={<NavigateNext/>}
-                                next2Label={<SkipNext />}
-                                className={"calendar"}
-                                onChange={this.handleChange}
-                                maxDate={this.state.maxDate}/>
+                <Container style={{marginTop: 10, marginBottom: 100}}>
+                    <Grid container>
+                        <Grid item xs={12} lg={12} md={12} sm={12}>
+                            <Paper>
+                                <Calendar
+                                    className={'calender'}
+                                    prev2Label={<SkipPrevious/>}
+                                    prevLabel={<NavigateBefore/>}
+                                    nextLabel={<NavigateNext/>}
+                                    next2Label={<SkipNext/>}
+                                    tileClassName={'tile'}
+                                    onChange={this.handleChange}
+                                    maxDate={this.state.maxDate}/>
+                            </Paper>
+
                         </Grid>
                     </Grid>
                 </Container>
-                <Container  style={{marginTop: 100, marginBottom: 100}}>
-                    <Grid container >
+                <Container style={{marginTop: 100, marginBottom: 100}}>
+                    <Grid container>
                         <Grid item className={classes.flex} xs={12} lg={12} md={12} sm={12}>
                             <Button
                                 component={RouterLink}
