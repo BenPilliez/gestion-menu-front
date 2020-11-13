@@ -16,6 +16,20 @@ export const clearState = () => {
     }
 }
 
-export const avatarUpdate = () => {
-
+export const avatarUpdate = (form,id) => {
+    return (dispatch, getState, {axiosInstance, toast}) => {
+        axiosInstance({url: `${process.env.REACT_APP_BASE_URL}/user/avatar/${id}`,
+            data:form, method:'PUT',
+            headers:{
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+            .then((res) => {
+                dispatch({type:'AVATAR_UPDATE_SUCCESS'})
+                toast.success('Ton avatar a été mis à jour')
+            }).catch(error => {
+            dispatch({type: 'AVATAR_UPDATE_ERROR', error: error.response.data})
+            toast.error(error.response.data)
+        })
+    }
 }

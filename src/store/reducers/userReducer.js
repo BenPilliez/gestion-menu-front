@@ -1,7 +1,8 @@
 const initState = {
     isLoading: false,
     error: null,
-    passwordUpdate: false
+    passwordUpdate: false,
+    avatarUpdate: true
 }
 
 const userReducer = (state = initState, action) => {
@@ -27,11 +28,24 @@ const userReducer = (state = initState, action) => {
                 isLoading: false,
                 error: null
             }
+        case 'AVATAR_UPDATE_SUCCESS':
+            return{
+                ...state,
+                error: null,
+                isLoading: null,
+                avatarUpdate: true
+            }
+        case 'AVATAR_UPDATE_ERROR':
+            return{
+                ...state,
+                error: action.error
+            }
         case 'RESET_STATE':
             return {
                 ...state,
                 passwordUpdate: false,
                 isLoading: false,
+                avatarUpdate: false,
                 error: null
             }
 

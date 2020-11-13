@@ -4,7 +4,7 @@ import CloseIcon from "@material-ui/icons/Close"
 
 const CustomDialog = ({isOpen, title, handleClose, children}) => {
     return (
-        <Dialog open={isOpen} onClose={handleClose}>
+        <Dialog open={isOpen} onClose={handleClose} fullWidth>
             <DialogTitle>
                 {title}
                 <IconButton aria-label="close" onClick={handleClose}>

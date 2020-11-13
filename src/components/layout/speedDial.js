@@ -7,6 +7,7 @@ import SpeedDialAction from '@material-ui/lab/SpeedDialAction';
 import {Face, Lock, Settings} from "@material-ui/icons";
 import CustomDialog from "../layout/customDialog"
 import FormDialogPassword from "../user/formDialogPassword";
+import FormDialogAvatar from "../user/formDialogAvatar"
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -97,6 +98,7 @@ export default function SpeedDialTooltipOpen() {
                 isOpen={isOpenAvatar}
                 handleClose={handleCloseDialogAvatar}
             >
+                <FormDialogAvatar handleClose={handleCloseDialogAvatar}/>
             </CustomDialog>
         </div>
     );
