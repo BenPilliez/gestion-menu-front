@@ -6,6 +6,7 @@ import {
 } from "../../store/actions/jumbotronActions"
 import {connect} from "react-redux"
 import {Redirect} from "react-router-dom";
+import SpeedDial from "../layout/speedDial";
 
 const Account = (props) => {
 
@@ -19,9 +20,14 @@ const Account = (props) => {
             props.defaultJumbotron()
         }
     })
+
+
     if (!user) return <Redirect to={"/signin"}/>
     return (
         <div>
+
+        <SpeedDial />
+
         </div>
     )
 }
