@@ -12,6 +12,12 @@ const authReducer = (state = initState, action) => {
             }
         case 'CREATE_MENU':
             return state
+        case 'CLEAR_STATE': {
+            return {
+                ...state,
+                propositions: null
+            }
+        }
         default:
             return state
     }

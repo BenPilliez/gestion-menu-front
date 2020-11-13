@@ -30,3 +30,9 @@ export const addMenu = (form) => {
             })
     }
 }
+
+export const clearState = () => {
+    return (dispatch) => {
+        dispatch({type: "CLEAR_STATE"})
+    }
+}

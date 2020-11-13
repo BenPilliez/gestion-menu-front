@@ -27,7 +27,6 @@ export default function SpeedDialTooltipOpen() {
     const [open, setOpen] = React.useState(false);
     const [isOpenMdp, setIsOpenMdp] = React.useState(false)
     const [isOpenAvatar, setIsOpenAvatar] = React.useState(false)
-    const [showPassword, setShowPassword] = React.useState(false)
 
     const handleOpen = () => {
         setOpen(true);
@@ -89,7 +88,7 @@ export default function SpeedDialTooltipOpen() {
                 isOpen={isOpenMdp}
                 handleClose={handleCloseDialogMdp}
             >
-                <FormDialogPassword/>
+                <FormDialogPassword handleClose={handleCloseDialogMdp}/>
 
             </CustomDialog>
 
