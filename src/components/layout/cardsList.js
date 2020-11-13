@@ -50,7 +50,7 @@ const CardLists = ({proposition}) => {
                         <Avatar className={classes.large} alt={"avatar" + proposition.user.username}
                                 src={process.env.REACT_APP_BASE_URL + "/static/avatars/" + proposition.user.avatarUrl}/>
                     }
-                    title={proposition.title}
+                    title={`${proposition.title} (${proposition.period})`}
                     subheader={moment().day(proposition.day).week(proposition.week).format('LL')}
                 >
                 </CardHeader>
