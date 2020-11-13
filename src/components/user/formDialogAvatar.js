@@ -1,7 +1,7 @@
 import React, {Component} from "react"
 import {Button,withStyles} from "@material-ui/core";
 import {connect} from "react-redux"
-import {clearState, passwordUpdate} from "../../store/actions/userActions";
+import {clearState} from "../../store/actions/userActions";
 import {DropzoneArea} from "material-ui-dropzone";
 import {avatarUpdate} from "../../store/actions/userActions";
 import {converFormToFormData} from "../../helpers/convertFormToFomdata";
@@ -15,7 +15,7 @@ const classes = (theme) => ({
 class FormDialogAvatar extends Component {
 
     state = {
-        avatar: '',
+        avatars: '',
         error: false,
         errorMessage: '',
     }
@@ -23,7 +23,7 @@ class FormDialogAvatar extends Component {
     handleFile = (file) => {
         this.setState({
             ...this.state,
-            avatar: file[0]
+            avatars: file[0]
         })
     }
 
