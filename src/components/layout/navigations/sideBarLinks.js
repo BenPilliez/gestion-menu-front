@@ -29,7 +29,6 @@ const SideBarLinks = (props) => {
     }))
 
     const classes = useStyles()
-
     return (
         <List>
             {anchor !== "bottom" ?

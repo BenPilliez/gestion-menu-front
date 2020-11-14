@@ -17,6 +17,13 @@ const authReducer = (state = initState, action) => {
                 authError: null,
                 user: action.user
             }
+        case 'UPDATE_USER_INFO':
+           localStorage.setItem('user', JSON.stringify(action.user))
+            return {
+                ...state,
+                user: JSON.parse(localStorage.getItem('user'))
+
+            }
         case 'SIGNOUT_SUCCESS':
             console.log("SIGN OUT")
             return {

@@ -16,6 +16,13 @@ export const signIn = (credentials) => {
     }
 }
 
+export const updateAuthUserInfo = (info) => {
+    return (dispatch) => {
+        console.log("update user info")
+        dispatch({type: 'UPDATE_USER_INFO', user:info})
+    }
+}
+
 export const signOut = () => {
     return (dispatch) => {
         localStorage.clear();

@@ -1,3 +1,5 @@
+import {updateAuthUserInfo} from "./authActions";
+
 export const passwordUpdate = (form,id) => {
     return (dispatch, getState, {axiosInstance, toast}) => {
         axiosInstance({url: `${process.env.REACT_APP_BASE_URL}/user/password/${id}`, data:form, method:'PUT'})
@@ -26,6 +28,7 @@ export const avatarUpdate = (form,id) => {
         })
             .then((res) => {
                 dispatch({type:'AVATAR_UPDATE_SUCCESS'})
+                dispatch(updateAuthUserInfo(res.data))
                 toast.success('Ton avatar a été mis à jour')
             }).catch(error => {
             dispatch({type: 'AVATAR_UPDATE_ERROR', error: error.response.data})
