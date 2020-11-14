@@ -7,6 +7,8 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import {Delete, Settings} from '@material-ui/icons';
 import {isMobile} from "react-device-detect"
+import moment from "moment"
+import 'moment/locale/fr'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -39,13 +41,15 @@ const useStyles = makeStyles((theme) => ({
 
 const UserProps = ({item}) =>  {
     const classes = useStyles();
-    const theme = useTheme();
     return (
         <Card className={classes.root} >
             <div className={classes.details}>
                 <CardContent className={classes.content}>
                     <Typography component="h5" variant="h5">
                         {item.title}
+                    </Typography>
+                    <Typography variant="subtitle1" color="textSecondary">
+                        {moment().day(item.day).week(item.week).format('LL')}
                     </Typography>
                 </CardContent>
                 <div className={classes.controls}>

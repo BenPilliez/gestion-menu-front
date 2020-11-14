@@ -1,17 +1,49 @@
 import React from "react"
-import {Avatar, Card, CardContent, CardHeader, CardMedia, Grid, Typography} from "@material-ui/core";
+import {Avatar, Button, Card, CardContent, CardHeader, CardMedia, Grid, Typography} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import moment from "moment";
 import clsx from "clsx";
-import {ExpandMore} from "@material-ui/icons";
+import {ExpandMore, NavigateBefore, NavigateNext, Settings, SkipNext, SkipPrevious} from "@material-ui/icons";
 import CardActions from "@material-ui/core/CardActions";
 import IconButton from "@material-ui/core/IconButton";
 import Collapse from "@material-ui/core/Collapse";
+import CustomDialog from "./customDialog";
+import Calendar from "react-calendar";
+
 moment.locale('fr')
 
-const CardLists = ({proposition}) => {
+const CardLists = (props) => {
 
     const [expanded, setExpanded] = React.useState(false);
+    const date = moment().week(moment().weeksInYear()).endOf('isoWeek').format('L')
+    const [week, setWeek] = React.useState(moment().week())
+    const [day, setDay] = React.useState(moment().format('dddd'))
+    const [open, setOpen] = React.useState(false);
+
+
+    const handleChange = (nextValue) => {
+        moment.locale('fr')
+
+        let date = moment(nextValue)
+        let week = date.week()
+        let day = date.format('dddd')
+
+        setDay(day)
+        setWeek(week)
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        console.log(day, week)
+    }
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
 
     const handleExpandClick = () => {
         setExpanded(!expanded);
@@ -19,7 +51,7 @@ const CardLists = ({proposition}) => {
 
     const useStyles = makeStyles((theme) => ({
         root: {
-            maxWidth: 345,
+            width: 400,
         },
         media: {
             height: 0,
@@ -38,9 +70,10 @@ const CardLists = ({proposition}) => {
     }));
 
     const classes = useStyles()
+    const {proposition} = props
 
     return (
-        <Grid item xs={12} lg={6} md={6} sm={12} style={{marginTop: 15}}>
+        <Grid item xs={12} lg={6} md={6} sm={6} style={{marginTop: 15, display:'flex', justifyContent:'center'}}>
             <Card className={classes.root}>
                 <CardHeader
                     avatar={ proposition.user.avatarUrl === null ?
@@ -66,6 +99,11 @@ const CardLists = ({proposition}) => {
                     </Typography>
                 </CardContent>
                 <CardActions disableSpacing>
+
+                    <IconButton aria-label="share" onClick={handleClickOpen}>
+                        <Settings />
+                        </IconButton>
+
                     <IconButton
                         className={clsx(classes.expand, {
                             [classes.expandOpen]: expanded,
@@ -83,8 +121,38 @@ const CardLists = ({proposition}) => {
                     </CardContent>
                 </Collapse>
             </Card>
+            <CustomDialog
+                title={"Copie le menu"}
+                isOpen={open}
+                handleClose={handleClose}
+            >
+                <form onSubmit={handleSubmit}>
+                    <Calendar
+                        className={'calender'}
+                        prev2Label={<SkipPrevious/>}
+                        prevLabel={<NavigateBefore/>}
+                        nextLabel={<NavigateNext/>}
+                        next2Label={<SkipNext/>}
+                        tileClassName={'tile'}
+                        onChange={handleChange}
+                        maxDate={ new Date (date)}/>
+
+                    <Button
+                        className={classes.spacing}
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                    >
+                            Copier
+                    </Button>
+
+                </form>
+            </CustomDialog>
         </Grid>
     )
 }
+
+
 
 export default CardLists
