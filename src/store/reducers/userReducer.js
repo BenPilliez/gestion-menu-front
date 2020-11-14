@@ -1,13 +1,15 @@
 const initState = {
     isLoading: false,
     error: null,
+    accountError: false,
     passwordUpdate: false,
-    avatarUpdate: true
+    avatarUpdate: true,
 }
 
 const userReducer = (state = initState, action) => {
     switch (action.type) {
         case 'UPDATE_PASSWORD_REQUEST':
+            console.log('UPDATE_PASSWORD_REQUEST')
             return {
                 ...state,
                 isLoading: true,
@@ -22,6 +24,7 @@ const userReducer = (state = initState, action) => {
                 error: action.error
             }
         case 'PASSWORD_UPDATE_SUCCESS':
+            console.log('PASSWORD_UPDATE_SUCCESS')
             return {
                 ...state,
                 passwordUpdate: true,
@@ -29,18 +32,21 @@ const userReducer = (state = initState, action) => {
                 error: null
             }
         case 'AVATAR_UPDATE_SUCCESS':
-            return{
+            console.log('AVATAR_UPDATE_SUCCESS')
+            return {
                 ...state,
                 error: null,
                 isLoading: null,
                 avatarUpdate: true
             }
         case 'AVATAR_UPDATE_ERROR':
-            return{
+            console.log('AVATAR_UPDATE_ERROR')
+            return {
                 ...state,
                 error: action.error
             }
         case 'RESET_STATE':
+            console.log('RESET_STATE')
             return {
                 ...state,
                 passwordUpdate: false,

@@ -11,14 +11,13 @@ import FormDialogAvatar from "../user/formDialogAvatar"
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        height: 380,
         transform: 'translateZ(0px)',
         flexGrow: 1,
     },
     speedDial: {
         position: 'absolute',
-        bottom: theme.spacing(2),
-        right: theme.spacing(2),
+        left: theme.spacing(2),
+        top: theme.spacing(1)
     },
 }));
 
@@ -58,11 +57,12 @@ export default function SpeedDialTooltipOpen() {
     ];
 
     return (
-        <div className={classes.root}>
+        <div>
             <Backdrop open={open}/>
             <SpeedDial
                 ariaLabel="SpeedDial tooltip example"
                 className={classes.speedDial}
+                direction={'right'}
                 icon={<SpeedDialIcon icon={<Settings/>}/>}
                 onClose={handleClose}
                 onOpen={handleOpen}
@@ -72,15 +72,12 @@ export default function SpeedDialTooltipOpen() {
                     <SpeedDialAction
                         key={action.name}
                         icon={action.icon}
-                        tooltipTitle={action.name}
                         open={open}
-                        tooltipOpen
                         onClick={(e) => {
                             handleClose(e, action.operation)
                         }}
-                        title={action.name}
                         id={action.id}
-                    />
+                        title={action.name}/>
                 ))}
             </SpeedDial>
 
