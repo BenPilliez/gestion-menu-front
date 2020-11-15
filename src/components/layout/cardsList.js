@@ -9,8 +9,9 @@ import IconButton from "@material-ui/core/IconButton";
 import Collapse from "@material-ui/core/Collapse";
 import CustomDialog from "./customDialog";
 import Calendar from "react-calendar";
-
-moment.locale('fr')
+import {connect} from "react-redux"
+import {copyMenu} from "../../store/actions/menuActions";
+import 'moment/locale/fr'
 
 const CardLists = (props) => {
 
@@ -18,11 +19,11 @@ const CardLists = (props) => {
     const date = moment().week(moment().weeksInYear()).endOf('isoWeek').format('L')
     const [week, setWeek] = React.useState(moment().week())
     const [day, setDay] = React.useState(moment().format('dddd'))
+    const [id, setId] = React.useState(props.proposition.id)
     const [open, setOpen] = React.useState(false);
 
 
     const handleChange = (nextValue) => {
-        moment.locale('fr')
 
         let date = moment(nextValue)
         let week = date.week()
@@ -30,11 +31,6 @@ const CardLists = (props) => {
 
         setDay(day)
         setWeek(week)
-    }
-
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        console.log(day, week)
     }
 
     const handleClickOpen = () => {
@@ -48,6 +44,14 @@ const CardLists = (props) => {
     const handleExpandClick = () => {
         setExpanded(!expanded);
     };
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+
+        props.copy(id, week, day)
+        handleClose
+
+    }
 
     const useStyles = makeStyles((theme) => ({
         root: {
@@ -73,10 +77,10 @@ const CardLists = (props) => {
     const {proposition} = props
 
     return (
-        <Grid item xs={12} lg={6} md={6} sm={6} style={{marginTop: 15, display:'flex', justifyContent:'center'}}>
+        <Grid item xs={12} lg={6} md={6} sm={6} style={{marginTop: 15, display: 'flex', justifyContent: 'center'}}>
             <Card className={classes.root}>
                 <CardHeader
-                    avatar={ proposition.user.avatarUrl === null ?
+                    avatar={proposition.user.avatarUrl === null ?
                         <Avatar aria-label="recipe" className={classes.avatar}>
                             {proposition.user.username}
                         </Avatar> :
@@ -89,7 +93,7 @@ const CardLists = (props) => {
                 </CardHeader>
                 <CardMedia
                     className={classes.media}
-                    image= {`${process.env.REACT_APP_BASE_URL}/static/propositions/${proposition.imageUrl}`}
+                    image={`${process.env.REACT_APP_BASE_URL}/static/propositions/${proposition.imageUrl}`}
                     title={proposition.title}
                 >
                 </CardMedia>
@@ -101,8 +105,8 @@ const CardLists = (props) => {
                 <CardActions disableSpacing>
 
                     <IconButton aria-label="share" onClick={handleClickOpen}>
-                        <Settings />
-                        </IconButton>
+                        <Settings/>
+                    </IconButton>
 
                     <IconButton
                         className={clsx(classes.expand, {
@@ -112,11 +116,11 @@ const CardLists = (props) => {
                         aria-expanded={expanded}
                         aria-label="Description"
                     >
-                        <ExpandMore />
+                        <ExpandMore/>
                     </IconButton>
                 </CardActions>
                 <Collapse in={expanded} timeout="auto" unmountOnExit>
-                    <CardContent >
+                    <CardContent>
                         <span dangerouslySetInnerHTML={{__html: proposition.description}}/>
                     </CardContent>
                 </Collapse>
@@ -135,7 +139,7 @@ const CardLists = (props) => {
                         next2Label={<SkipNext/>}
                         tileClassName={'tile'}
                         onChange={handleChange}
-                        maxDate={ new Date (date)}/>
+                        maxDate={new Date(date)}/>
 
                     <Button
                         className={classes.spacing}
@@ -144,7 +148,7 @@ const CardLists = (props) => {
                         variant="contained"
                         color="primary"
                     >
-                            Copier
+                        Copier
                     </Button>
 
                 </form>
@@ -153,6 +157,11 @@ const CardLists = (props) => {
     )
 }
 
+const mapDispatchToProps = (dispatch) => {
+    return {
+        copy: (id, day, week) => dispatch(copyMenu(id, day, week))
+    }
+}
 
 
-export default CardLists
+export default connect(null, mapDispatchToProps)(CardLists)
