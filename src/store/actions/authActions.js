@@ -22,7 +22,44 @@ export const updateAuthUserInfo = (info) => {
         dispatch({type: 'UPDATE_USER_INFO', user: info})
     }
 }
+export const deleteMenu = (id) => {
+    return (dispatch, getState, {axiosInstance, toast}) => {
+        axiosInstance({
+            url: `${process.env.REACT_APP_BASE_URL}/propositions/${id}`,
+            method: 'DELETE'
+        })
+            .then((res) => {
+                dispatch({type: 'DELETE_MENU'})
+                toast.success('Le menu a bien été supprimé')
+            }).catch(err => {
+            toast.error('Il y a eu un problème pendant la suppression')
+        })
+    }
+}
 
+export const updateDataLoading = (value) => {
+    return (dispatch) => {
+        dispatch({type: 'UPDATE_DATA_LOADING', value})
+    }
+}
+export const editMenu = (id,form) => {
+    return (dispatch, getState, {axiosInstance, toast}) => {
+        axiosInstance({
+            url: `${process.env.REACT_APP_BASE_URL}/propositions/${id}`,
+            data:form,
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            },
+            method: 'PUT'
+        })
+            .then((res) => {
+                dispatch({type: 'EDIT_MENU', propositions: res.data})
+                toast.success('Le menu a bien été modifié')
+            }).catch(err => {
+            toast.error('Il y a eu un problème pendant la copie')
+        })
+    }
+}
 export const loadPropUser = (page) => {
     return (dispatch, getState, {axiosInstance, toast}) => {
         axiosInstance({url: `${process.env.REACT_APP_BASE_URL}/auth/account`})

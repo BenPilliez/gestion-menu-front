@@ -5,10 +5,14 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import {Delete, Settings} from '@material-ui/icons';
+import {Delete, Edit, FileCopy} from '@material-ui/icons';
 import {isMobile} from "react-device-detect"
 import moment from "moment"
 import 'moment/locale/fr'
+import CustomDialog from "../layout/customDialog";
+import FormCopy from "../propositions/formCopy";
+import EditMenuComponent from "../propositions/editMenu";
+import AlertDialogSlide from "../propositions/alertDialog";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -41,6 +45,34 @@ const useStyles = makeStyles((theme) => ({
 
 const UserProps = ({item}) => {
     const classes = useStyles();
+    const [isOpenCopy, setIsOpenCopy] = React.useState(false)
+    const [isOpenEdit, setIsOpenEdit] = React.useState(false)
+    const [isOpenDelete, setIsOpenDelete] = React.useState(false)
+
+    const handleOpenCopy = () => {
+        setIsOpenCopy(true)
+    }
+
+    const handleCloseCopy = () => {
+        setIsOpenCopy(false)
+    }
+
+    const handleOpenDelete = () => {
+        setIsOpenDelete(true)
+    }
+
+    const handleCloseDelete = () => {
+        setIsOpenDelete(false)
+    }
+
+    const handleOpenEdit = () => {
+        setIsOpenEdit(true)
+    }
+
+    const handleCloseEdit = () => {
+        setIsOpenEdit(false)
+    }
+
     return (
         <Card className={classes.root}>
             <div className={classes.details}>
@@ -53,11 +85,15 @@ const UserProps = ({item}) => {
                     </Typography>
                 </CardContent>
                 <div className={classes.controls}>
-                    <IconButton aria-label="previous">
-                        <Delete/>
+                    <IconButton aria-label="copy" onClick={handleOpenCopy}>
+                        <FileCopy/>
                     </IconButton>
-                    <IconButton aria-label="next">
-                        <Settings/>
+                    <IconButton aria-label="edit" onClick={handleOpenEdit}>
+                        <Edit/>
+                    </IconButton>
+
+                    <IconButton color={"secondary"} aria-label="delete" onClick={handleOpenDelete}>
+                        <Delete/>
                     </IconButton>
                 </div>
             </div>
@@ -66,6 +102,41 @@ const UserProps = ({item}) => {
                 image={`${process.env.REACT_APP_BASE_URL}/static/propositions/${item.imageUrl}`}
                 title="Live from space album cover"
             />
+
+            <CustomDialog
+                title={"Copie le menu"}
+                isOpen={isOpenCopy}
+                handleClose={handleCloseCopy}
+            >
+                <FormCopy handleClose={handleCloseCopy} id={item.id}/>
+            </CustomDialog>
+
+            <CustomDialog
+                title={"Edition menu"}
+                isOpen={isOpenEdit}
+                handleClose={handleCloseEdit}
+            >
+                <EditMenuComponent
+                    handleClose={handleCloseEdit}
+                    id={item.id}
+                    title={item.title}
+                    content={item.content}
+                    description={item.description}
+                    day={item.day}
+                    period={item.period}
+                    week={item.week}
+                    imageUrl={item.imageUrl}
+
+                />
+            </CustomDialog>
+
+            <AlertDialogSlide
+                isOpen={isOpenDelete}
+                handleClose={handleCloseDelete}
+                title={"Supprimer ?"}
+                content={"Tu es sur le point de supprimer une proposition tu es bien sur ?"}
+                id={item.id}/>
+
         </Card>
     );
 }

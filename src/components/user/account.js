@@ -14,7 +14,6 @@ const Account = (props) => {
 
     const {propositions, totalPages} = props
     const [page, setPage] = React.useState(1);
-    console.log(totalPages)
     let paginatedArray = propositions && propositions.length ? paginate(propositions, 10, page) : null
 
     const handleChange = (event, value) => {

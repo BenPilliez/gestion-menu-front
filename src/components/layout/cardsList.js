@@ -1,37 +1,22 @@
 import React from "react"
-import {Avatar, Button, Card, CardContent, CardHeader, CardMedia, Grid, Typography} from "@material-ui/core";
+import {Avatar, Card, CardContent, CardHeader, CardMedia, Grid, Typography} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import moment from "moment";
 import clsx from "clsx";
-import {ExpandMore, NavigateBefore, NavigateNext, Settings, SkipNext, SkipPrevious} from "@material-ui/icons";
+import {ExpandMore, FileCopy} from "@material-ui/icons";
 import CardActions from "@material-ui/core/CardActions";
 import IconButton from "@material-ui/core/IconButton";
 import Collapse from "@material-ui/core/Collapse";
 import CustomDialog from "./customDialog";
-import Calendar from "react-calendar";
 import {connect} from "react-redux"
 import {copyMenu} from "../../store/actions/menuActions";
 import 'moment/locale/fr'
+import FormCopy from "../propositions/formCopy";
 
 const CardLists = (props) => {
 
     const [expanded, setExpanded] = React.useState(false);
-    const date = moment().week(moment().weeksInYear()).endOf('isoWeek').format('L')
-    const [week, setWeek] = React.useState(moment().week())
-    const [day, setDay] = React.useState(moment().format('dddd'))
-    const [id, setId] = React.useState(props.proposition.id)
     const [open, setOpen] = React.useState(false);
-
-
-    const handleChange = (nextValue) => {
-
-        let date = moment(nextValue)
-        let week = date.week()
-        let day = date.format('dddd')
-
-        setDay(day)
-        setWeek(week)
-    }
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -45,13 +30,6 @@ const CardLists = (props) => {
         setExpanded(!expanded);
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-
-        props.copy(id, week, day)
-        handleClose
-
-    }
 
     const useStyles = makeStyles((theme) => ({
         root: {
@@ -105,7 +83,7 @@ const CardLists = (props) => {
                 <CardActions disableSpacing>
 
                     <IconButton aria-label="share" onClick={handleClickOpen}>
-                        <Settings/>
+                        <FileCopy/>
                     </IconButton>
 
                     <IconButton
@@ -130,28 +108,7 @@ const CardLists = (props) => {
                 isOpen={open}
                 handleClose={handleClose}
             >
-                <form onSubmit={handleSubmit}>
-                    <Calendar
-                        className={'calender'}
-                        prev2Label={<SkipPrevious/>}
-                        prevLabel={<NavigateBefore/>}
-                        nextLabel={<NavigateNext/>}
-                        next2Label={<SkipNext/>}
-                        tileClassName={'tile'}
-                        onChange={handleChange}
-                        maxDate={new Date(date)}/>
-
-                    <Button
-                        className={classes.spacing}
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                    >
-                        Copier
-                    </Button>
-
-                </form>
+                <FormCopy handleClose={handleClose} id={proposition.id}/>
             </CustomDialog>
         </Grid>
     )

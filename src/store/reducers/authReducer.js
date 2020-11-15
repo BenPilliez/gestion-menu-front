@@ -38,6 +38,21 @@ const authReducer = (state = initState, action) => {
                 totalItems: action.userPropositions.totalItems,
                 totalPages: action.userPropositions.totalPages
             }
+        case 'EDIT_MENU':
+            return {
+                ...state,
+                isDataLoading: false,
+            }
+        case 'UPDATE_DATA_LOADING':
+            return {
+                ...state,
+                isDataLoading: action.value
+            }
+        case 'DELETE_MENU':
+            return {
+                ...state,
+                isDataLoading: false
+            }
         case 'SIGNOUT_SUCCESS':
             console.log("SIGN OUT")
             return {
