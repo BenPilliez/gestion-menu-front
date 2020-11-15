@@ -1,15 +1,20 @@
 import React from "react"
-import {Dialog, DialogContent, DialogTitle, IconButton} from "@material-ui/core"
-import CloseIcon from "@material-ui/icons/Close"
+import {Dialog, DialogContent, DialogTitle, Slide, Typography} from "@material-ui/core"
+import AppBars from "./appBar";
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Slide direction="right" ref={ref} {...props} />;
+});
+
 
 const CustomDialog = ({isOpen, title, handleClose, children}) => {
     return (
-        <Dialog open={isOpen} onClose={handleClose} fullWidth>
+        <Dialog open={isOpen} fullScreen TransitionComponent={Transition}>
+            <AppBars handleClose={handleClose}/>
             <DialogTitle>
-                {title}
-                <IconButton aria-label="close" onClick={handleClose}>
-                    <CloseIcon/>
-                </IconButton>
+                <Typography align={"center"}>
+                    {title}
+                </Typography>
             </DialogTitle>
 
             <DialogContent>

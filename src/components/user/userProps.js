@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     details: {
         display: 'flex',
         flexDirection: 'column',
-        alignItems:'center',
+        alignItems: 'center',
         justifyContent: 'center',
         width: 600
     },
@@ -39,10 +39,10 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const UserProps = ({item}) =>  {
+const UserProps = ({item}) => {
     const classes = useStyles();
     return (
-        <Card className={classes.root} >
+        <Card className={classes.root}>
             <div className={classes.details}>
                 <CardContent className={classes.content}>
                     <Typography component="h5" variant="h5">
@@ -54,10 +54,10 @@ const UserProps = ({item}) =>  {
                 </CardContent>
                 <div className={classes.controls}>
                     <IconButton aria-label="previous">
-                        <Delete />
+                        <Delete/>
                     </IconButton>
                     <IconButton aria-label="next">
-                        <Settings />
+                        <Settings/>
                     </IconButton>
                 </div>
             </div>

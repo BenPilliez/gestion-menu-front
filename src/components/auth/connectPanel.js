@@ -1,20 +1,18 @@
 import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import {
-    AppBar,
     Card,
     Button,
     CardMedia,
     Dialog,
-    IconButton,
     Slide,
-    Toolbar,
     CardContent,
     Typography
 } from "@material-ui/core"
-import {Close, PlayCircleOutline} from '@material-ui/icons';
+import {PlayCircleOutline} from '@material-ui/icons';
 import SignIn from "./SignIn";
 import Logo from "../../img/android-chrome-192x192.png"
+import AppBars from "../layout/appBar";
 
 const useStyles = makeStyles((theme) => ({
     appBar: {
@@ -78,13 +76,7 @@ export default function FullScreenDialog() {
                 </CardContent>
             </Card>
             <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
-                <AppBar className={classes.appBar}>
-                    <Toolbar>
-                        <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
-                            <Close/>
-                        </IconButton>
-                    </Toolbar>
-                </AppBar>
+                <AppBars handleClose={handleClose} />
                 <SignIn/>
             </Dialog>
             <Button className={classes.bottomButton} variant="contained" startIcon={<PlayCircleOutline />} color="primary" onClick={handleClickOpen}>

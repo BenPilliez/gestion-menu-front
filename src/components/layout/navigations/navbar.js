@@ -6,8 +6,6 @@ import SideBarLinks from "./sideBarLinks";
 import {isMobile} from "react-device-detect"
 import {makeStyles} from "@material-ui/core/styles";
 import {signOut} from "../../../store/actions/authActions";
-import {SpeedDial} from "@material-ui/lab";
-
 
 const useStyles = makeStyles((theme) => ({
     buttonNav: {

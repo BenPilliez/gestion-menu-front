@@ -5,13 +5,16 @@ import {loadPropUser} from "../../store/actions/authActions"
 import {Pagination} from '@material-ui/lab';
 import {paginate} from "../../helpers/paginate";
 import UserProps from "./userProps";
-import {Grid} from "@material-ui/core";
+import {Button, Grid} from "@material-ui/core";
+import Typography from "@material-ui/core/Typography";
+import {Link as RouterLink} from "react-router-dom";
+import {AddCircle} from "@material-ui/icons";
 
 const Account = (props) => {
 
     const {propositions, totalPages} = props
     const [page, setPage] = React.useState(1);
-
+    console.log(totalPages)
     let paginatedArray = propositions && propositions.length ? paginate(propositions, 10, page) : null
 
     const handleChange = (event, value) => {
@@ -32,15 +35,38 @@ const Account = (props) => {
                     return <Grid key={item.id} item xs={12} lg={5} md={5} sm={12}>
                         <UserProps item={item}/>
                     </Grid>
-                }) : <div>Allo</div>}
+                }) : <Grid container>
+                    <Grid item xs={12} style={{marginTop: 60}}>
+                        <Typography variant="h3" align={"center"}>
+                            Tu n'as encore rien proposé
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={12} style={{display: 'flex', justifyContent: 'center',marginTop: 60}}>
+
+                        <Button
+                            component={RouterLink}
+                            to={`/create/propositions`}
+                            variant="contained"
+                            color="primary"
+                            size="large"
+                            startIcon={<AddCircle/>}
+                        >
+                            Ajouter un proposition
+                        </Button>
+                    </Grid>
+                </Grid>
+
+                }
 
                 <Grid item xs={12} style={{display: 'flex', justifyContent: 'center', marginTop: 2}}>
-                    <Pagination
-                        count={totalPages}
-                        page={page}
-                        onChange={handleChange}
-                        color="primary"
-                        showFirstButton showLastButton/>
+                    {paginatedArray && paginatedArray.length > 0 ?
+                        <Pagination
+                            count={totalPages}
+                            page={page}
+                            onChange={handleChange}
+                            color="primary"
+                            showFirstButton showLastButton/> : null}
+
                 </Grid>
 
             </Grid>
