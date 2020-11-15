@@ -23,7 +23,7 @@ class EditMenuComponent extends Component {
         description: this.props.description,
         day: this.props.day,
         period: this.props.period === 'soir',
-        periodValue: 'soir',
+        periodValue: this.props.period,
         week: this.props.week,
         maxDate: new Date(maxDate)
     }
