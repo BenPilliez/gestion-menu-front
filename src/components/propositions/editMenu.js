@@ -73,7 +73,9 @@ class EditMenuComponent extends Component {
 
         const formData = converFormToFormData(this.state)
         this.props.edit(this.props.id,formData)
-        this.props.handleClose()
+        if(this.props.isCreatedDeleteOrEdit === true){
+            this.props.handleClose()
+        }
     }
 
     render() {
@@ -82,7 +84,7 @@ class EditMenuComponent extends Component {
 
         return (
             <Container style={{marginTop: 15, marginBottom: 100}}>
-                <form ref={'form'} noValidate onSubmit={this.handleSubmit}>
+                <form ref={'form'}  onSubmit={this.handleSubmit}>
                     <Grid container spacing={4}>
                         <Grid item xs={12} md={12} lg={12} sm={12}>
                             <Paper>
@@ -158,6 +160,12 @@ class EditMenuComponent extends Component {
     }
 }
 
+const mapStateToProps = (state) => {
+    return {
+        isCreatedDeleteOrEdit: state.menus.isCreatedDeleteOrEdit
+    }
+}
+
 const mapDispatchToProps = (dispatch) => {
     return {
         edit: (id, form) => dispatch(editMenu(id, form))
@@ -165,4 +173,4 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 
-export default connect(null, mapDispatchToProps)(EditMenuComponent)
+export default connect(mapStateToProps, mapDispatchToProps)(EditMenuComponent)

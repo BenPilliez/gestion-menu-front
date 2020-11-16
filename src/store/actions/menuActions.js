@@ -13,6 +13,8 @@ export const getMenusDays = (day, weekNumber) => {
 
 export const addMenu = (form) => {
     return (dispatch, getState, {axiosInstance, toast}) => {
+        dispatch({type:'IS_CREATED_OR_EDIT'})
+
         axiosInstance({
             url: `${process.env.REACT_APP_BASE_URL}/propositions/`,
             data: form,
@@ -27,12 +29,15 @@ export const addMenu = (form) => {
             })
             .catch((error) => {
                 console.log(error.response)
-                toast.error(error.response.data.error)
+                dispatch({type:'ERROR_CREATE_MENU'})
+                let err = error.response ? error.response.data : 'Oops on a eu un problème'
+                toast.error(err)
             })
     }
 }
 export const editMenu = (id,form) => {
     return (dispatch, getState, {axiosInstance, toast}) => {
+        dispatch({type:'IS_CREATED_OR_EDIT'})
         axiosInstance({
             url: `${process.env.REACT_APP_BASE_URL}/propositions/${id}`,
             data:form,
@@ -52,6 +57,8 @@ export const editMenu = (id,form) => {
 
 export const deleteMenu = (id) => {
     return (dispatch, getState, {axiosInstance, toast}) => {
+        dispatch({type:'IS_CREATED_OR_EDIT'})
+
         axiosInstance({
             url: `${process.env.REACT_APP_BASE_URL}/propositions/${id}`,
             method: 'DELETE'

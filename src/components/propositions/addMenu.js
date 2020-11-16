@@ -22,10 +22,10 @@ class addMenuComponent extends Component {
         title: '',
         content: '',
         description: '',
-        day: this.props.day,
+        day: this.props.day !== undefined ? this.props.day : moment().format('dddd'),
         period: true,
         periodValue: 'soir',
-        week: this.props.week,
+        week: this.props.week !== undefined ? this.props.week : moment().week() ,
         maxDate: new Date(maxDate)
     }
 
@@ -71,9 +71,13 @@ class addMenuComponent extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault()
+        console.log(this.state)
         const formData = converFormToFormData(this.state)
         this.props.add(formData)
-        this.props.history.push(`/`)
+        if(this.props.isCreatedDeleteOrEdit !== false){
+            document.getElementById("add_menu").reset();
+        }
+
     }
 
     render() {
@@ -83,7 +87,7 @@ class addMenuComponent extends Component {
         return (
 
             <Container style={{marginTop: 15, marginBottom: 100}}>
-                <form ref={'form'} noValidate onSubmit={this.handleSubmit}>
+                <form ref={'form'}  onSubmit={this.handleSubmit} id={"add_menu"}>
                     <Grid container spacing={4}>
                         <Grid item xs={12} md={12} lg={12} sm={12}>
                             <Paper>
@@ -162,7 +166,8 @@ const mapStateToProps = (state, ownProps) => {
 
     return {
         day: day ? day.day : moment().format('dddd'),
-        week: week ? week.week : moment().week()
+        week: week ? week.week : moment().week(),
+        isCreatedDeleteOrEdit: state.menus.isCreatedOrEdit
     }
 }
 
