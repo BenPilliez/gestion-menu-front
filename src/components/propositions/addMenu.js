@@ -1,6 +1,5 @@
 import React, {Component} from "react"
-import {Button, Container, Grid, Switch, TextField, Typography, Paper} from "@material-ui/core"
-import moment from "moment"
+import {Button, Container, Grid, Paper, Switch, TextField, Typography} from "@material-ui/core"
 import {DropzoneArea} from "material-ui-dropzone";
 import {addMenu} from "../../store/actions/menuActions";
 import {connect} from "react-redux"
@@ -11,6 +10,7 @@ import queryString from "url";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import {NavigateBefore, NavigateNext, SkipNext, SkipPrevious} from "@material-ui/icons";
+import moment from "moment"
 import "moment/locale/fr"
 
 const maxDate = moment().week(moment().weeksInYear()).endOf('isoWeek').format('L')
@@ -25,7 +25,7 @@ class addMenuComponent extends Component {
         day: this.props.day !== undefined ? this.props.day : moment().format('dddd'),
         period: true,
         periodValue: 'soir',
-        week: this.props.week !== undefined ? this.props.week : moment().week() ,
+        week: this.props.week !== undefined ? this.props.week : moment().week(),
         maxDate: new Date(maxDate)
     }
 
@@ -71,10 +71,10 @@ class addMenuComponent extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault()
-        console.log(this.state)
+
         const formData = converFormToFormData(this.state)
         this.props.add(formData)
-        if(this.props.isCreatedDeleteOrEdit !== false){
+        if (this.props.isCreatedDeleteOrEdit !== false) {
             document.getElementById("add_menu").reset();
         }
 
@@ -87,7 +87,7 @@ class addMenuComponent extends Component {
         return (
 
             <Container style={{marginTop: 15, marginBottom: 100}}>
-                <form ref={'form'}  onSubmit={this.handleSubmit} id={"add_menu"}>
+                <form ref={'form'} onSubmit={this.handleSubmit} id={"add_menu"}>
                     <Grid container spacing={4}>
                         <Grid item xs={12} md={12} lg={12} sm={12}>
                             <Paper>

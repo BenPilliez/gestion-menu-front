@@ -11,6 +11,7 @@ import CardLists from "../layout/cardsList";
 import Skeleton from "@material-ui/lab/Skeleton";
 import "moment/locale/fr"
 import Paper from "@material-ui/core/Paper";
+import SocketIo from "socket.io-client";
 
 const maxDate = moment().week(moment().weeksInYear()).endOf('isoWeek').format('L')
 
@@ -35,6 +36,10 @@ class Dashboard extends Component {
     }
 
     componentDidMount() {
+        const socket =  SocketIo.connect(process.env.REACT_APP_BASE_SOCKET)
+        socket.on('PropCreated', (response) => {
+            this.props.getMenus(this.state.day, this.state.week)
+        })
         this.props.getMenus(this.state.day, this.state.week)
     }
 

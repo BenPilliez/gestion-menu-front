@@ -14,9 +14,10 @@ class App extends Component {
     render() {
         const {user} = this.props
         if (!user) return <div><ConnectPannel/> <ToastContainer/></div>
+
         return (
             <BrowserRouter>
-                <NavBar />
+                <NavBar/>
                 <div className="App">
                     <Switch>
                         <Route exact path={"/"} component={dashboard}/>
