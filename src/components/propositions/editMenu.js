@@ -8,7 +8,7 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import {NavigateBefore, NavigateNext, SkipNext, SkipPrevious} from "@material-ui/icons";
 import moment from "moment"
-import {editMenu} from "../../store/actions/authActions";
+import {editMenu} from "../../store/actions/menuActions";
 import {connect} from "react-redux"
 import "moment/locale/fr"
 
@@ -70,7 +70,7 @@ class EditMenuComponent extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault()
-        console.log(this.state)
+
         const formData = converFormToFormData(this.state)
         this.props.edit(this.props.id,formData)
         this.props.handleClose()
@@ -79,7 +79,6 @@ class EditMenuComponent extends Component {
     render() {
 
         const date = this.props.day && this.props.day ? moment().day(this.props.day).week(this.props.week) : moment()
-        console.log(this.props)
 
         return (
             <Container style={{marginTop: 15, marginBottom: 100}}>

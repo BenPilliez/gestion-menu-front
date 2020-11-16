@@ -6,7 +6,7 @@ import moment from "moment";
 import 'moment/locale/fr'
 import {connect} from "react-redux"
 import {copyMenu} from "../../store/actions/menuActions";
-import {updateDataLoading} from "../../store/actions/authActions";
+import {updateDataLoading} from "../../store/actions/menuActions";
 
 
 class FormCopy extends Component {

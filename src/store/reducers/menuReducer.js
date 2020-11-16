@@ -1,5 +1,9 @@
 const initState = {
     propositions: null,
+    userPropositions: null,
+    totalItems: null,
+    totalPages: null,
+    isDataLoading: false
 }
 
 const authReducer = (state = initState, action) => {
@@ -12,6 +16,29 @@ const authReducer = (state = initState, action) => {
             }
         case 'CREATE_MENU':
             return state
+        case 'USER_PROPOSITIONS':
+            return {
+                ...state,
+                isDataLoading: true,
+                userPropositions: action.userPropositions.items,
+                totalItems: action.userPropositions.totalItems,
+                totalPages: action.userPropositions.totalPages
+            }
+        case 'UPDATE_DATA_LOADING':
+            return {
+                ...state,
+                isDataLoading: action.value
+            }
+        case 'DELETE_MENU':
+            return {
+                ...state,
+                isDataLoading: false
+            }
+        case 'EDIT_MENU':
+            return {
+                ...state,
+                isDataLoading: false,
+            }
         case 'CLEAR_STATE': {
             return {
                 ...state,

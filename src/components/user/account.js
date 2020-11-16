@@ -1,7 +1,7 @@
 import React, {useEffect} from "react"
 import {connect} from "react-redux"
 import SpeedDial from "../layout/speedDial";
-import {loadPropUser} from "../../store/actions/authActions"
+import {loadPropUser} from "../../store/actions/menuActions"
 import {Pagination} from '@material-ui/lab';
 import {paginate} from "../../helpers/paginate";
 import UserProps from "./userProps";
@@ -75,12 +75,11 @@ const Account = (props) => {
 }
 
 const mapStateToProps = (state) => {
-
     return {
-        propositions: state.auth.userPropositions,
-        isDataLoading: state.auth.isDataLoading,
-        totalPages: state.auth.totalPages,
-        totalItems: state.auth.totalItems
+        propositions: state.menus.userPropositions,
+        isDataLoading: state.menus.isDataLoading,
+        totalPages: state.menus.totalPages,
+        totalItems: state.menus.totalItems
     }
 }
 const mapDispatchToProps = (dispatch) => {

@@ -1,10 +1,6 @@
 const initState = {
     authError: null,
-    user: JSON.parse(localStorage.getItem('user')) || null,
-    userPropositions: null,
-    totalItems: null,
-    totalPages: null,
-    isDataLoading: false
+    user: JSON.parse(localStorage.getItem('user')) || null
 }
 
 const authReducer = (state = initState, action) => {
@@ -30,29 +26,7 @@ const authReducer = (state = initState, action) => {
                 user: JSON.parse(localStorage.getItem('user'))
 
             }
-        case 'USER_PROPOSITIONS':
-            return {
-                ...state,
-                isDataLoading: true,
-                userPropositions: action.userPropositions.items,
-                totalItems: action.userPropositions.totalItems,
-                totalPages: action.userPropositions.totalPages
-            }
-        case 'EDIT_MENU':
-            return {
-                ...state,
-                isDataLoading: false,
-            }
-        case 'UPDATE_DATA_LOADING':
-            return {
-                ...state,
-                isDataLoading: action.value
-            }
-        case 'DELETE_MENU':
-            return {
-                ...state,
-                isDataLoading: false
-            }
+
         case 'SIGNOUT_SUCCESS':
             console.log("SIGN OUT")
             return {
