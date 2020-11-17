@@ -12,7 +12,6 @@ import 'react-quill/dist/quill.snow.css';
 import {NavigateBefore, NavigateNext, SkipNext, SkipPrevious} from "@material-ui/icons";
 import moment from "moment"
 import "moment/locale/fr"
-import SocketIo from "socket.io-client";
 
 const maxDate = moment().week(moment().weeksInYear()).endOf('isoWeek').format('L')
 
@@ -77,11 +76,6 @@ class addMenuComponent extends Component {
         this.props.add(formData, this.state.day, this.state.week)
 
         if (this.props.isCreatedDeleteOrEdit !== false) {
-            const socket = SocketIo.connect(process.env.REACT_APP_BASE_SOCKET)
-            socket.on('PropCreated', (response) => {
-                console.log(response)
-                this.props.addToStorage(response, response.day, response.week)
-            })
             document.getElementById("add_menu").reset();
         }
 

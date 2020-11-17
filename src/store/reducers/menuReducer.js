@@ -55,7 +55,8 @@ const menuReducer = (state = initState, action) => {
             }
             return {
                 ...state,
-                isCreatedDeleteOrEdit: true
+                isCreatedDeleteOrEdit: true,
+                propositions: JSON.parse(localStorage.getItem(`${action.day}-${action.weekNumber}`))
             }
 
         case 'USER_PROPOSITIONS':

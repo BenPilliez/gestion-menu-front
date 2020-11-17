@@ -3,7 +3,7 @@ import {connect} from "react-redux"
 import {Box, Button, Container, Grid, withStyles} from "@material-ui/core"
 import Calendar from "react-calendar"
 import 'react-calendar/dist/Calendar.css'
-import {getMenusDays} from "../../store/actions/menuActions"
+import {getMenusDays, addToStorage} from "../../store/actions/menuActions"
 import moment from "moment"
 import {Link as RouterLink} from "react-router-dom";
 import {AddCircle, NavigateBefore, NavigateNext, SkipNext, SkipPrevious} from "@material-ui/icons";
@@ -36,10 +36,10 @@ class Dashboard extends Component {
     }
 
     componentDidMount() {
-      /*  const socket =  SocketIo.connect(process.env.REACT_APP_BASE_SOCKET)
+        const socket =  SocketIo.connect(process.env.REACT_APP_BASE_SOCKET)
         socket.on('PropCreated', (response) => {
-            this.props.getMenus(this.state.day, this.state.week)
-        })*/
+            this.props.addToStorage(response, response.day, response.week)
+        })
         this.props.getMenus(this.state.day, this.state.week)
     }
 
@@ -127,7 +127,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        getMenus: (day, query) => dispatch(getMenusDays(day, query))
+        getMenus: (day,query) => dispatch(getMenusDays(day,query)),
+        addToStorage: (data, day, weekNumber) => dispatch(addToStorage(data, day, weekNumber))
     }
 }
 
