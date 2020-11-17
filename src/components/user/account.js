@@ -22,7 +22,7 @@ const Account = (props) => {
     };
 
     useEffect(() => {
-        if (props.isDataLoading !== true) {
+        if (props.isDataLoaded !== true) {
             props.loadProps(page)
         }
     })
@@ -77,7 +77,7 @@ const Account = (props) => {
 const mapStateToProps = (state) => {
     return {
         propositions: state.menus.userPropositions,
-        isDataLoading: state.menus.isDataLoading,
+        isDataLoaded: state.menus.isDataLoaded,
         totalPages: state.menus.totalPages,
         totalItems: state.menus.totalItems
     }

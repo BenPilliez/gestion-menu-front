@@ -36,10 +36,10 @@ class Dashboard extends Component {
     }
 
     componentDidMount() {
-        const socket =  SocketIo.connect(process.env.REACT_APP_BASE_SOCKET)
+      /*  const socket =  SocketIo.connect(process.env.REACT_APP_BASE_SOCKET)
         socket.on('PropCreated', (response) => {
             this.props.getMenus(this.state.day, this.state.week)
-        })
+        })*/
         this.props.getMenus(this.state.day, this.state.week)
     }
 
@@ -60,12 +60,11 @@ class Dashboard extends Component {
 
     }
 
-
     render() {
 
-        const {propositions, classes} = this.props
-
-        const propos = propositions ? propositions.map((item) => {
+        const {propositions,isDataLoaded, classes} = this.props
+        console.log(isDataLoaded)
+        const propos = isDataLoaded ? propositions.map((item) => {
             return (
                 <CardLists key={item.id} proposition={item}/>
             )
@@ -121,6 +120,7 @@ class Dashboard extends Component {
 
 const mapStateToProps = (state) => {
     return {
+        isDataLoaded: state.menus.isDataLoaded,
         propositions: state.menus.propositions
     }
 }

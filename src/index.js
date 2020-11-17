@@ -12,6 +12,7 @@ import {toast} from "react-toastify";
 import CssBaseline from '@material-ui/core/CssBaseline';
 import {ThemeProvider} from "@material-ui/styles";
 import theme from "./config/theme";
+import {createDbStore} from "./helpers/indexeddb";
 
 const token = localStorage.getItem('token')
 

@@ -1,20 +1,36 @@
 export const getMenusDays = (day, weekNumber) => {
-    return (dispatch, getState, {axiosInstance, toast}) => {
-        axiosInstance({url: `${process.env.REACT_APP_BASE_URL}/propositions/${day}?week=${weekNumber}`, method: 'GET'})
-            .then((res) => {
-                dispatch({type: "LOAD_DAY_MENU", propositions: res.data.rows})
+    return (dispatch, getState, {axiosInstance, toast, indexDb}) => {
+        dispatch({type: 'DATA_LOADING'})
+        let menus = JSON.parse(localStorage.getItem(`${day}-${weekNumber}`));
+        if (menus) {
+           dispatch({type: 'GET_FROM_LOCALSTORAGE', day:day, weekNumber: weekNumber})
+        } else {
+            axiosInstance({
+                url: `${process.env.REACT_APP_BASE_URL}/propositions/${day}?week=${weekNumber}`,
+                method: 'GET'
             })
-            .catch((error) => {
-                console.log(error.response)
-                toast.error(error.response.data.error)
-            })
+                .then((res) => {
+                    dispatch({
+                        type: "LOAD_FROM_REQUEST",
+                        propositions: res.data.rows,
+                        day: day,
+                        weekNumber: weekNumber,
+                        store: indexDb
+                    })
+                })
+                .catch((error) => {
+                    console.log(error.response)
+                    console.log(error)
+                    toast.error(error.response.data.error)
+                })
+        }
+
     }
 }
 
-export const addMenu = (form) => {
+export const addMenu = (form, day, weekNumber) => {
     return (dispatch, getState, {axiosInstance, toast}) => {
-        dispatch({type:'IS_CREATED_OR_EDIT'})
-
+        dispatch({type: 'IS_CREATED_OR_EDIT'})
         axiosInstance({
             url: `${process.env.REACT_APP_BASE_URL}/propositions/`,
             data: form,
@@ -24,23 +40,31 @@ export const addMenu = (form) => {
             }
         })
             .then((res) => {
-                dispatch({type: "CREATE_MENU", propositions: res.data})
+                dispatch({type: 'ADD_MENU'})
                 toast.success('Ta proposition a bien été ajouté')
             })
             .catch((error) => {
+                console.log(error)
                 console.log(error.response)
-                dispatch({type:'ERROR_CREATE_MENU'})
+                dispatch({type: 'ERROR_CREATE_MENU'})
                 let err = error.response ? error.response.data : 'Oops on a eu un problème'
                 toast.error(err)
             })
     }
 }
-export const editMenu = (id,form) => {
+
+export const addToStorage = (data, day,weekNumber) => {
+    return (dispatch)  => {
+        dispatch({type: "ADD_TO_STORAGE", data, day, weekNumber})
+    }
+}
+
+export const editMenu = (id, form) => {
     return (dispatch, getState, {axiosInstance, toast}) => {
-        dispatch({type:'IS_CREATED_OR_EDIT'})
+        dispatch({type: 'IS_CREATED_OR_EDIT'})
         axiosInstance({
             url: `${process.env.REACT_APP_BASE_URL}/propositions/${id}`,
-            data:form,
+            data: form,
             headers: {
                 'Content-Type': 'multipart/form-data'
             },
@@ -57,7 +81,7 @@ export const editMenu = (id,form) => {
 
 export const deleteMenu = (id) => {
     return (dispatch, getState, {axiosInstance, toast}) => {
-        dispatch({type:'IS_CREATED_OR_EDIT'})
+        dispatch({type: 'IS_CREATED_OR_EDIT'})
 
         axiosInstance({
             url: `${process.env.REACT_APP_BASE_URL}/propositions/${id}`,
@@ -80,6 +104,8 @@ export const updateDataLoading = (value) => {
 
 export const loadPropUser = (page) => {
     return (dispatch, getState, {axiosInstance, toast}) => {
+        dispatch({type: 'DATA_LOADING'})
+
         axiosInstance({url: `${process.env.REACT_APP_BASE_URL}/auth/account`})
             .then((res) => {
                 dispatch({type: 'USER_PROPOSITIONS', userPropositions: res.data, page: page})
@@ -106,8 +132,3 @@ export const copyMenu = (id, week, day) => {
     }
 }
 
-export const clearState = () => {
-    return (dispatch) => {
-        dispatch({type: "CLEAR_STATE"})
-    }
-}

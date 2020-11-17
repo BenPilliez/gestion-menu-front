@@ -1,7 +1,7 @@
 import React, {Component} from "react"
 import {Button, Container, Grid, Paper, Switch, TextField, Typography} from "@material-ui/core"
 import {DropzoneArea} from "material-ui-dropzone";
-import {addMenu} from "../../store/actions/menuActions";
+import {addMenu, addToStorage} from "../../store/actions/menuActions";
 import {connect} from "react-redux"
 import {converFormToFormData} from "../../helpers/convertFormToFomdata";
 import Calendar from "react-calendar"
@@ -12,6 +12,7 @@ import 'react-quill/dist/quill.snow.css';
 import {NavigateBefore, NavigateNext, SkipNext, SkipPrevious} from "@material-ui/icons";
 import moment from "moment"
 import "moment/locale/fr"
+import SocketIo from "socket.io-client";
 
 const maxDate = moment().week(moment().weeksInYear()).endOf('isoWeek').format('L')
 
@@ -73,8 +74,14 @@ class addMenuComponent extends Component {
         e.preventDefault()
 
         const formData = converFormToFormData(this.state)
-        this.props.add(formData)
+        this.props.add(formData, this.state.day, this.state.week)
+
         if (this.props.isCreatedDeleteOrEdit !== false) {
+            const socket = SocketIo.connect(process.env.REACT_APP_BASE_SOCKET)
+            socket.on('PropCreated', (response) => {
+                console.log(response)
+                this.props.addToStorage(response, response.day, response.week)
+            })
             document.getElementById("add_menu").reset();
         }
 
@@ -173,7 +180,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        add: (form) => dispatch(addMenu(form))
+        add: (form, day, week) => dispatch(addMenu(form, day, week)),
+        addToStorage: (data, day, week) => dispatch(addToStorage(data, day, week))
     }
 }
 
