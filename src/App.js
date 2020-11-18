@@ -11,6 +11,7 @@ import ConnectPannel from "./components/auth/connectPanel";
 import NavBar from "./components/layout/navigations/navbar";
 
 class App extends Component {
+
     render() {
         const {user} = this.props
         if (!user) return <div><ConnectPannel/> <ToastContainer/></div>

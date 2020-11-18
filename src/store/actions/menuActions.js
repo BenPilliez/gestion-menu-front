@@ -1,9 +1,15 @@
+export const dataLoading = () => {
+    return (dispatch) => {
+        dispatch({type: "DATA_LOADING"})
+    }
+}
+
 export const getMenusDays = (day, weekNumber) => {
     return (dispatch, getState, {axiosInstance, toast, indexDb}) => {
-        dispatch({type: 'DATA_LOADING'})
+        dispatch(dataLoading())
         let menus = JSON.parse(localStorage.getItem(`${day}-${weekNumber}`));
         if (menus) {
-           dispatch({type: 'GET_FROM_LOCALSTORAGE', day:day, weekNumber: weekNumber})
+            dispatch({type: 'GET_FROM_LOCALSTORAGE', day: day, weekNumber: weekNumber})
         } else {
             axiosInstance({
                 url: `${process.env.REACT_APP_BASE_URL}/propositions/${day}?week=${weekNumber}`,
@@ -53,8 +59,8 @@ export const addMenu = (form, day, weekNumber) => {
     }
 }
 
-export const addToStorage = (data, day,weekNumber) => {
-    return (dispatch)  => {
+export const addToStorage = (data, day, weekNumber) => {
+    return (dispatch) => {
         dispatch({type: "ADD_TO_STORAGE", data, day, weekNumber})
     }
 }
@@ -82,15 +88,13 @@ export const editMenu = (id, form) => {
 export const deleteMenu = (id) => {
     return (dispatch, getState, {axiosInstance, toast}) => {
         dispatch({type: 'IS_CREATED_OR_EDIT'})
-
         axiosInstance({
             url: `${process.env.REACT_APP_BASE_URL}/propositions/${id}`,
             method: 'DELETE'
-        })
-            .then((res) => {
-                dispatch({type: 'DELETE_MENU'})
-                toast.success('Le menu a bien été supprimé')
-            }).catch(err => {
+        }).then((res) => {
+            dispatch({type: 'DELETE_MENU'})
+            toast.success('Le menu a bien été supprimé')
+        }).catch(err => {
             toast.error('Il y a eu un problème pendant la suppression')
         })
     }
@@ -101,11 +105,9 @@ export const updateDataLoading = (value) => {
         dispatch({type: 'UPDATE_DATA_LOADING', value})
     }
 }
-
 export const loadPropUser = (page) => {
     return (dispatch, getState, {axiosInstance, toast}) => {
-        dispatch({type: 'DATA_LOADING'})
-
+        dispatch(dataLoading())
         axiosInstance({url: `${process.env.REACT_APP_BASE_URL}/auth/account`})
             .then((res) => {
                 dispatch({type: 'USER_PROPOSITIONS', userPropositions: res.data, page: page})

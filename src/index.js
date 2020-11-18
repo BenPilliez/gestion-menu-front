@@ -19,6 +19,14 @@ if (token !== null) {
     setAuthorization(axiosInstance, token)
 }
 
+window.addEventListener('beforeunload', function(e){
+    for(let storage in localStorage){
+        if(localStorage.hasOwnProperty(storage) && storage !== "user" && storage !== "setupTime" && storage !== "token"){
+            localStorage.removeItem(storage)
+        }
+    }
+})
+
 const store = createStore(rootReducers, applyMiddleware(thunk.withExtraArgument({axiosInstance, toast})))
 
 // On maintient la connexion pendant 24h

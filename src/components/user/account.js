@@ -1,7 +1,7 @@
 import React, {useEffect} from "react"
 import {connect} from "react-redux"
 import SpeedDial from "../layout/speedDial";
-import {loadPropUser} from "../../store/actions/menuActions"
+import {loadPropUser, updateDataLoading} from "../../store/actions/menuActions"
 import {Pagination} from '@material-ui/lab';
 import {paginate} from "../../helpers/paginate";
 import UserProps from "./userProps";
@@ -22,6 +22,7 @@ const Account = (props) => {
     };
 
     useEffect(() => {
+        console.log(props.isDataLoaded)
         if (props.isDataLoaded !== true) {
             props.loadProps(page)
         }
@@ -40,7 +41,7 @@ const Account = (props) => {
                             Tu n'as encore rien proposé
                         </Typography>
                     </Grid>
-                    <Grid item xs={12} style={{display: 'flex', justifyContent: 'center',marginTop: 60}}>
+                    <Grid item xs={12} style={{display: 'flex', justifyContent: 'center', marginTop: 60}}>
 
                         <Button
                             component={RouterLink}
@@ -85,7 +86,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
 
     return {
-        loadProps: (page) => dispatch(loadPropUser(page))
+        loadProps: (page) => dispatch(loadPropUser(page)),
+        updateDataLoading: (value) => dispatch(updateDataLoading(value))
     }
 
 }

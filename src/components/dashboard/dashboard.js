@@ -3,7 +3,7 @@ import {connect} from "react-redux"
 import {Box, Button, Container, Grid, withStyles} from "@material-ui/core"
 import Calendar from "react-calendar"
 import 'react-calendar/dist/Calendar.css'
-import {getMenusDays, addToStorage} from "../../store/actions/menuActions"
+import {addToStorage, getMenusDays, updateDataLoading} from "../../store/actions/menuActions"
 import moment from "moment"
 import {Link as RouterLink} from "react-router-dom";
 import {AddCircle, NavigateBefore, NavigateNext, SkipNext, SkipPrevious} from "@material-ui/icons";
@@ -36,12 +36,13 @@ class Dashboard extends Component {
     }
 
     componentDidMount() {
-        const socket =  SocketIo.connect(process.env.REACT_APP_BASE_SOCKET)
+        const socket = SocketIo.connect(process.env.REACT_APP_BASE_SOCKET)
         socket.on('PropCreated', (response) => {
             this.props.addToStorage(response, response.day, response.week)
         })
         this.props.getMenus(this.state.day, this.state.week)
     }
+
 
     handleChange = (nextValue) => {
         moment.locale('fr')
@@ -60,11 +61,15 @@ class Dashboard extends Component {
 
     }
 
+    componentWillUnmount() {
+        this.props.updateDataLoading(false)
+    }
+
     render() {
 
-        const {propositions,isDataLoaded, classes} = this.props
+        const {propositions, isDataLoaded, classes} = this.props
         console.log(isDataLoaded)
-        const propos = isDataLoaded ? propositions.map((item) => {
+        const propos = isDataLoaded && propositions ? propositions.map((item) => {
             return (
                 <CardLists key={item.id} proposition={item}/>
             )
@@ -127,8 +132,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        getMenus: (day,query) => dispatch(getMenusDays(day,query)),
-        addToStorage: (data, day, weekNumber) => dispatch(addToStorage(data, day, weekNumber))
+        getMenus: (day, query) => dispatch(getMenusDays(day, query)),
+        addToStorage: (data, day, weekNumber) => dispatch(addToStorage(data, day, weekNumber)),
+        updateDataLoading: (value) => dispatch(updateDataLoading(value))
     }
 }
 
