@@ -5,7 +5,7 @@ const initState = {
     totalItems: null,
     totalPages: null,
     isDataLoaded: false,
-    isCreatedDeleteOrEdit: false
+    isCreatedDeleteOrEdit: false,
 }
 
 const menuReducer = (state = initState, action) => {
@@ -37,12 +37,6 @@ const menuReducer = (state = initState, action) => {
                 isCreatedDeleteOrEdit: false
             }
         }
-        case 'ADD_MENU':
-            return {
-                ...state,
-                isCreatedDeleteOrEdit: true
-            }
-
         case 'ADD_TO_STORAGE':
             let menus = JSON.parse(localStorage.getItem(`${action.day}-${action.weekNumber}`));
             if (menus) {
@@ -59,22 +53,28 @@ const menuReducer = (state = initState, action) => {
             }
         case "DELETE_ITEM_FROM_STORAGE" :
             let item = JSON.parse(localStorage.getItem(`${action.day}-${action.weekNumber}`));
+
             if (item) {
                 let newItem = item.filter((value) => {
-                    console.log(value, action.item)
                     return value.id !== action.item
                 })
+
                 localStorage.setItem(`${action.day}-${action.weekNumber}`, JSON.stringify(newItem))
                 return {
                     ...state,
                     propositions: JSON.parse(localStorage.getItem(`${action.day}-${action.weekNumber}`)),
-                    isDataLoaded: false,
-                    isCreatedDeleteOrEdit: true
+                    isCreatedDeleteOrEdit: true,
+                    isDataLoaded: false
                 }
             }
-            return{
+            return {
                 ...state,
                 isDataLoaded: false,
+            }
+        case 'IS_OK' :
+            return {
+                ...state,
+                isCreatedDeleteOrEdit: false
             }
 
         case 'USER_PROPOSITIONS':

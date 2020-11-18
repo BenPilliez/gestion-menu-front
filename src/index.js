@@ -19,9 +19,9 @@ if (token !== null) {
     setAuthorization(axiosInstance, token)
 }
 
-window.addEventListener('beforeunload', function(e){
-    for(let storage in localStorage){
-        if(localStorage.hasOwnProperty(storage) && storage !== "user" && storage !== "setupTime" && storage !== "token"){
+window.addEventListener('beforeunload', function (e) {
+    for (let storage in localStorage) {
+        if (localStorage.hasOwnProperty(storage) && storage !== "user" && storage !== "setupTime" && storage !== "token") {
             localStorage.removeItem(storage)
         }
     }
@@ -49,7 +49,6 @@ ReactDOM.render(
             <App/>
         </Provider>
     </ThemeProvider>,
-
     document.getElementById('root')
 );
 
