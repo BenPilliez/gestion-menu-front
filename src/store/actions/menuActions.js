@@ -37,6 +37,7 @@ export const getMenusDays = (day, weekNumber) => {
 export const addMenu = (form, day, weekNumber) => {
     return (dispatch, getState, {axiosInstance, toast}) => {
         dispatch({type: 'IS_CREATED_OR_EDIT'})
+        dispatch(dataLoading())
         axiosInstance({
             url: `${process.env.REACT_APP_BASE_URL}/propositions/`,
             data: form,
@@ -46,7 +47,7 @@ export const addMenu = (form, day, weekNumber) => {
             }
         })
             .then((res) => {
-                dispatch({type: 'ADD_MENU'})
+                dispatch(addToStorage(res.data, res.data.day, res.data.week))
                 toast.success('Ta proposition a bien été ajouté')
             })
             .catch((error) => {
@@ -62,6 +63,12 @@ export const addMenu = (form, day, weekNumber) => {
 export const addToStorage = (data, day, weekNumber) => {
     return (dispatch) => {
         dispatch({type: "ADD_TO_STORAGE", data, day, weekNumber})
+    }
+}
+
+export const deleteItemFromStorage = (day,week, item) => {
+    return (dispatch) => {
+        dispatch({type: "DELETE_ITEM_FROM_STORAGE", day,week ,item})
     }
 }
 
@@ -92,7 +99,7 @@ export const deleteMenu = (id) => {
             url: `${process.env.REACT_APP_BASE_URL}/propositions/${id}`,
             method: 'DELETE'
         }).then((res) => {
-            dispatch({type: 'DELETE_MENU'})
+            dispatch({type:"DELETE_ITEM_FROM_STORAGE", day:res.data.day, weekNumber: res.data.week, item: res.data.id})
             toast.success('Le menu a bien été supprimé')
         }).catch(err => {
             toast.error('Il y a eu un problème pendant la suppression')

@@ -68,7 +68,6 @@ class Dashboard extends Component {
     render() {
 
         const {propositions, isDataLoaded, classes} = this.props
-        console.log(isDataLoaded)
         const propos = isDataLoaded && propositions ? propositions.map((item) => {
             return (
                 <CardLists key={item.id} proposition={item}/>

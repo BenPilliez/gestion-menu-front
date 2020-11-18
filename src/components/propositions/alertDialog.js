@@ -51,8 +51,7 @@ const  AlertDialogSlide = ({isOpen,title,handleClose, content, id, deleteProps})
 
 const mapDispatchTopProps = (dispatch) => {
     return {
-        deleteProps: (id) => dispatch(deleteMenu(id))
-    }
+        deleteProps: (id) => dispatch(deleteMenu(id))}
 }
 
 export default connect(null, mapDispatchTopProps)(AlertDialogSlide)

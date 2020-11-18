@@ -22,7 +22,6 @@ const Account = (props) => {
     };
 
     useEffect(() => {
-        console.log(props.isDataLoaded)
         if (props.isDataLoaded !== true) {
             props.loadProps(page)
         }
