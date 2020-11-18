@@ -32,9 +32,7 @@ const CardLists = (props) => {
 
 
     const useStyles = makeStyles((theme) => ({
-        root: {
-            width: 400,
-        },
+
         media: {
             height: 0,
             paddingTop: '56.25%', // 16:9
@@ -55,8 +53,8 @@ const CardLists = (props) => {
     const {proposition} = props
 
     return (
-        <Grid item xs={12} lg={6} md={6} sm={6} style={{marginTop: 15, display: 'flex', justifyContent: 'center'}}>
-            <Card className={classes.root}>
+        <Grid  item xs={12} lg={6} sm={6} md={6}   >
+            <Card >
                 <CardHeader
                     avatar={proposition.user.avatarUrl === null ?
                         <Avatar aria-label="recipe" className={classes.avatar}>
@@ -90,7 +88,7 @@ const CardLists = (props) => {
                         className={clsx(classes.expand, {
                             [classes.expandOpen]: expanded,
                         })}
-                        onClick={handleExpandClick}
+                        onClick={() => handleExpandClick()}
                         aria-expanded={expanded}
                         aria-label="Description"
                     >

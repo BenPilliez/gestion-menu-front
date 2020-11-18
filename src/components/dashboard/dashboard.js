@@ -70,7 +70,7 @@ class Dashboard extends Component {
         const {propositions, isDataLoaded, classes} = this.props
         const propos = isDataLoaded && propositions ? propositions.map((item) => {
             return (
-                <CardLists key={item.id} proposition={item}/>
+            <CardLists key={item.id}  proposition={item}/>
             )
         }) : (
             <Box pt={0.5}>
@@ -100,7 +100,7 @@ class Dashboard extends Component {
                     </Grid>
                 </Container>
                 <Container style={{marginTop: 100, marginBottom: 100}}>
-                    <Grid container>
+                    <Grid container spacing={2}>
                         <Grid item className={classes.flex} xs={12} lg={12} md={12} sm={12}>
                             <Button
                                 component={RouterLink}
