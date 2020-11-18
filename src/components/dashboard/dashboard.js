@@ -38,10 +38,12 @@ class Dashboard extends Component {
     componentDidMount() {
         socket.on('PropCreated', (response) => {
             this.props.addToStorage(response, response.day, response.week)
+            this.props.getMenus(this.state.day, this.state.week)
         })
 
         socket.on('PropDelete', (response) => {
             this.props.deleteItemStorage(response.day, response.week, response.id)
+            this.props.getMenus(this.state.day, this.state.week)
         })
         this.props.getMenus(this.state.day, this.state.week)
     }

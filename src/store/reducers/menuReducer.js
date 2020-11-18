@@ -44,12 +44,12 @@ const menuReducer = (state = initState, action) => {
                 localStorage.setItem(`${action.day}-${action.weekNumber}`, JSON.stringify(menus))
 
             } else {
-                localStorage.setItem(`${action.day}-${action.weekNumber}`, JSON.stringify(action.data))
+                localStorage.setItem(`${action.day}-${action.weekNumber}`, JSON.stringify([action.data]))
             }
             return {
                 ...state,
                 isCreatedDeleteOrEdit: true,
-                propositions: JSON.parse(localStorage.getItem(`${action.day}-${action.weekNumber}`))
+                isDataLoaded: true
             }
         case "DELETE_ITEM_FROM_STORAGE" :
             let item = JSON.parse(localStorage.getItem(`${action.day}-${action.weekNumber}`));
@@ -62,14 +62,13 @@ const menuReducer = (state = initState, action) => {
                 localStorage.setItem(`${action.day}-${action.weekNumber}`, JSON.stringify(newItem))
                 return {
                     ...state,
-                    propositions: JSON.parse(localStorage.getItem(`${action.day}-${action.weekNumber}`)),
                     isCreatedDeleteOrEdit: true,
-                    isDataLoaded: false
+                    isDataLoaded: true
                 }
             }
             return {
                 ...state,
-                isDataLoaded: false,
+                isDataLoaded: true,
             }
         case 'IS_OK' :
             return {

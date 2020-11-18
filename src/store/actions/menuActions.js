@@ -97,6 +97,7 @@ export const editMenu = (id, form) => {
 export const deleteMenu = (id) => {
     return (dispatch, getState, {axiosInstance, toast}) => {
         dispatch({type: 'IS_CREATED_OR_EDIT'})
+        dispatch(dataLoading())
         axiosInstance({
             url: `${process.env.REACT_APP_BASE_URL}/propositions/${id}`,
             method: 'DELETE'
