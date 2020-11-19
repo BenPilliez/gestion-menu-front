@@ -93,7 +93,7 @@ class Dashboard extends Component {
         )
         return (
             <div>
-                <Container style={{marginTop: 10, marginBottom: 100}}>
+                <Container style={{marginTop: 100, marginBottom: 100}}>
                     <Grid container>
                         <Grid item xs={12} lg={12} md={12} sm={12}>
                             <Paper>
@@ -122,7 +122,7 @@ class Dashboard extends Component {
                                 className={classes.button}
                                 startIcon={<AddCircle/>}
                             >
-                                Ajouter un proposition
+                                Ajouter une proposition
                             </Button>
                         </Grid>
                         {propositions && propositions.length > 0 ? propos : null}

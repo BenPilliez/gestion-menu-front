@@ -29,7 +29,7 @@ const Account = (props) => {
 
     return (
         <div>
-            <Grid container justify={'center'}>
+            <Grid container justify={'center'} style={{marginTop: 70}}>
                 {paginatedArray && paginatedArray.length > 0 ? paginatedArray.map((item) => {
                     return <Grid key={item.id} item xs={12} lg={5} md={5} sm={12}>
                         <UserProps item={item}/>
@@ -50,7 +50,7 @@ const Account = (props) => {
                             size="large"
                             startIcon={<AddCircle/>}
                         >
-                            Ajouter un proposition
+                            Ajouter une proposition
                         </Button>
                     </Grid>
                 </Grid>

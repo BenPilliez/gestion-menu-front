@@ -1,5 +1,5 @@
 import React from "react";
-import NavBar from "./navigations/navbar";
+import NavBar from "./navigations/desktop/navbar";
 import {makeStyles} from "@material-ui/core/styles";
 import background from "../../img/background.jpg"
 import {isMobile} from "react-device-detect"
