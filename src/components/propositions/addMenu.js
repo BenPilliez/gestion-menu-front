@@ -87,7 +87,7 @@ class addMenuComponent extends Component {
 
         return (
 
-            <Container style={{marginTop: 15, marginBottom: 100}}>
+            <Container style={{marginTop: 80, marginBottom: 100}}>
                 <form ref={'form'} onSubmit={this.handleSubmit} id={"add_menu"}>
                     <Grid container spacing={4}>
                         <Grid item xs={12} md={12} lg={12} sm={12}>
