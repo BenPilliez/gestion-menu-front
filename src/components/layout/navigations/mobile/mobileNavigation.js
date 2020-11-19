@@ -1,8 +1,8 @@
 import React from "react"
-import {BottomNavigation, BottomNavigationAction, Tabs, Tab, AppBar} from "@material-ui/core"
+import { Tabs, Tab, AppBar} from "@material-ui/core"
 import {makeStyles} from "@material-ui/core/styles"
 import {Link as RouterLink} from "react-router-dom";
-import {AccountBox, AccountCircle, AddCircleOutline, ExitToApp, Home, Notifications} from "@material-ui/icons";
+import {AccountCircle, AddCircleOutline, ExitToApp, Home, Notifications} from "@material-ui/icons";
 import {signOut} from "../../../../store/actions/authActions";
 import {connect} from "react-redux"
 
