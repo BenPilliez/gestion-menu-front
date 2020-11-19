@@ -91,7 +91,6 @@ const menuReducer = (state = initState, action) => {
             }
         case 'EDIT_STORAGE_ITEM':
             const items = JSON.parse(localStorage.getItem(`${action.day}-${action.weekNumber}`))
-            console.log(action.data)
             if (items) {
                 let newLocalStorage = items.filter((value) => {
                     return value.id !== action.data.id
