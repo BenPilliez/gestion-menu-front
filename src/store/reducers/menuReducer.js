@@ -89,11 +89,22 @@ const menuReducer = (state = initState, action) => {
                 ...state,
                 isDataLoaded: action.value
             }
-        case 'EDIT_MENU':
+        case 'EDIT_STORAGE_ITEM':
+            const items = JSON.parse(localStorage.getItem(`${action.day}-${action.weekNumber}`))
+            console.log(action.data)
+            if (items) {
+                let newLocalStorage = items.filter((value) => {
+                    return value.id !== action.data.id
+                })
+
+                newLocalStorage = [...newLocalStorage, action.data]
+                localStorage.setItem(`${action.day}-${action.weekNumber}`, JSON.stringify(newLocalStorage))
+            }
+
             return {
                 ...state,
                 isCreatedDeleteOrEdit: true,
-                isDataLoaded: false,
+                isDataLoaded: true,
             }
         default:
             return state

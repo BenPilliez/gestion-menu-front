@@ -3,7 +3,7 @@ import {connect} from "react-redux"
 import {Box, Button, Container, Grid, withStyles,Paper} from "@material-ui/core"
 import Calendar from "react-calendar"
 import 'react-calendar/dist/Calendar.css'
-import {addToStorage, deleteItemFromStorage, getMenusDays, updateDataLoading} from "../../store/actions/menuActions"
+import {addToStorage, deleteItemFromStorage, getMenusDays, updateDataLoading, editToStorage} from "../../store/actions/menuActions"
 import moment from "moment"
 import {Link as RouterLink} from "react-router-dom";
 import {AddCircle, NavigateBefore, NavigateNext, SkipNext, SkipPrevious} from "@material-ui/icons";
@@ -45,6 +45,12 @@ class Dashboard extends Component {
             this.props.deleteItemStorage(response.day, response.week, response.id)
             this.props.getMenus(this.state.day, this.state.week)
         })
+
+        socket.on('PropEdited', (response) => {
+            this.props.edit(response, response.day, response.week)
+            this.props.getMenus(this.state.day, this.state.week)
+        })
+
         this.props.getMenus(this.state.day, this.state.week)
     }
 
@@ -140,7 +146,8 @@ const mapDispatchToProps = (dispatch) => {
         getMenus: (day, query) => dispatch(getMenusDays(day, query)),
         addToStorage: (data, day, weekNumber) => dispatch(addToStorage(data, day, weekNumber)),
         updateDataLoading: (value) => dispatch(updateDataLoading(value)),
-        deleteItemStorage: (day, week, item) => dispatch(deleteItemFromStorage(day, week, item))
+        deleteItemStorage: (day, week, item) => dispatch(deleteItemFromStorage(day, week, item)),
+        edit: (data, day,week) => dispatch(editToStorage(data,day,week))
     }
 }
 

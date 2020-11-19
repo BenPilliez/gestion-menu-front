@@ -4,6 +4,37 @@ export const dataLoading = () => {
     }
 }
 
+
+export const updateDataLoading = (value) => {
+    return (dispatch) => {
+        dispatch({type: 'UPDATE_DATA_LOADING', value})
+    }
+}
+
+export const addToStorage = (data, day, weekNumber) => {
+    return (dispatch) => {
+        dispatch({type: "ADD_TO_STORAGE", data, day, weekNumber})
+    }
+}
+
+export const editToStorage = (data, day, weekNumber) => {
+    return (dispatch) => {
+        dispatch({type: "EDIT_STORAGE_ITEM", data, day, weekNumber})
+    }
+}
+
+export const isOk = () => {
+    return (dispatch) => {
+        dispatch({type: 'IS_OK', value: false})
+    }
+}
+export const deleteItemFromStorage = (day, weekNumber, item) => {
+    return (dispatch) => {
+        dispatch({type: "DELETE_ITEM_FROM_STORAGE", day, weekNumber, item})
+    }
+}
+
+
 export const getMenusDays = (day, weekNumber) => {
     return (dispatch, getState, {axiosInstance, toast}) => {
         dispatch(dataLoading())
@@ -58,25 +89,9 @@ export const addMenu = (form) => {
     }
 }
 
-export const addToStorage = (data, day, weekNumber) => {
-    return (dispatch) => {
-        dispatch({type: "ADD_TO_STORAGE", data, day, weekNumber})
-    }
-}
-export const isOk = () => {
-    return (dispatch) => {
-        dispatch({type: 'IS_OK', value: false})
-    }
-}
-export const deleteItemFromStorage = (day, weekNumber, item) => {
-    return (dispatch) => {
-        dispatch({type: "DELETE_ITEM_FROM_STORAGE", day, weekNumber, item})
-    }
-}
-
 export const editMenu = (id, form) => {
     return (dispatch, getState, {axiosInstance, toast}) => {
-        dispatch({type: 'IS_CREATED_OR_EDIT'})
+        dispatch(dataLoading())
         axiosInstance({
             url: `${process.env.REACT_APP_BASE_URL}/propositions/${id}`,
             data: form,
@@ -86,10 +101,10 @@ export const editMenu = (id, form) => {
             method: 'PUT'
         })
             .then((res) => {
-                dispatch({type: 'EDIT_MENU', propositions: res.data})
                 toast.success('Le menu a bien été modifié')
             }).catch(err => {
-            toast.error('Il y a eu un problème pendant la copie')
+                console.log(err)
+            toast.error('Il y a eu un problème pendant la mise à jour')
         })
     }
 }
@@ -109,11 +124,6 @@ export const deleteMenu = (id) => {
     }
 }
 
-export const updateDataLoading = (value) => {
-    return (dispatch) => {
-        dispatch({type: 'UPDATE_DATA_LOADING', value})
-    }
-}
 export const loadPropUser = (page) => {
     return (dispatch, getState, {axiosInstance, toast}) => {
         dispatch(dataLoading())
