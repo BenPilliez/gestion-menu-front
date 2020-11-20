@@ -8,7 +8,7 @@ import dashboard from "./components/dashboard/dashboard";
 import Account from "./components/user/account";
 import addMenuComponent from "./components/propositions/addMenu";
 import ConnectPannel from "./components/auth/connectPanel";
-import NavBar from "./components/layout/navigations/desktop/navbar";
+import AppNav from "./components/layout/navigations/AppBar/AppNav";
 
 class App extends Component {
 
@@ -19,7 +19,7 @@ class App extends Component {
         return (
             <BrowserRouter>
                 <div className="App">
-                    <NavBar/>
+                    <AppNav/>
                     <Switch>
                         <Route exact path={"/"} component={dashboard}/>
                         <Route path={'/signin'} component={SignIn}/>

@@ -7,9 +7,24 @@ import {signOut} from "../../../../store/actions/authActions";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import IconButton from "@material-ui/core/IconButton";
+import {makeStyles} from "@material-ui/core/styles";
 
 
-const AppBarNav = (props) => {
+const useStyles = makeStyles(theme => ({
+    root: {
+        flexGrow: 1
+    },
+    toolBar: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    }
+}))
+
+const DesktopNav = (props) => {
+
+    const classes = useStyles()
+
     const [value, setValue] = React.useState(0);
 
     const handleChange = (event, newValue) => {
@@ -29,8 +44,8 @@ const AppBarNav = (props) => {
 
 
     return (
-        <AppBar>
-            <Toolbar>
+        <AppBar className={classes.root} >
+            <Toolbar className={classes.toolBar}>
                 <Typography variant="h6" noWrap>
                     La bonne bouffe
                 </Typography>
@@ -99,4 +114,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AppBarNav)
+export default connect(mapStateToProps, mapDispatchToProps)(DesktopNav)

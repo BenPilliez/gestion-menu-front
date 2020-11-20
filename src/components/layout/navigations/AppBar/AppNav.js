@@ -1,16 +1,16 @@
 import React from "react"
 import MobileNavigation from "../mobile/mobileNavigation"
 import {useMediaQuery} from "@material-ui/core"
-import AppBarNav from "../AppBar/appBarNav";
+import DesktopNav from "../desktop/desktopNav";
 
 
-const NavBar = (props) => {
+const AppNav = (props) => {
     const matches = useMediaQuery(theme => theme.breakpoints.down('sm') || theme.breakpoints.down('xs'));
 
     return (
-        matches === true ? (<MobileNavigation />) : (<AppBarNav />)
+        matches === true ? (<MobileNavigation />) : (<DesktopNav />)
     )
 }
 
 
-export default NavBar
+export default AppNav
