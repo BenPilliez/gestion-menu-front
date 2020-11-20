@@ -4,6 +4,7 @@ import {Box, Button, Container, Grid, withStyles,Paper} from "@material-ui/core"
 import Calendar from "react-calendar"
 import 'react-calendar/dist/Calendar.css'
 import {addToStorage, deleteItemFromStorage, getMenusDays, updateDataLoading, editToStorage} from "../../store/actions/menuActions"
+import {notifications} from "../../store/actions/notificationActions";
 import moment from "moment"
 import {Link as RouterLink} from "react-router-dom";
 import {AddCircle, NavigateBefore, NavigateNext, SkipNext, SkipPrevious} from "@material-ui/icons";
@@ -38,6 +39,7 @@ class Dashboard extends Component {
     componentDidMount() {
         socket.on('PropCreated', (response) => {
             this.props.addToStorage(response, response.day, response.week)
+            this.props.notifications()
             this.props.getMenus(this.state.day, this.state.week)
         })
 
@@ -147,7 +149,8 @@ const mapDispatchToProps = (dispatch) => {
         addToStorage: (data, day, weekNumber) => dispatch(addToStorage(data, day, weekNumber)),
         updateDataLoading: (value) => dispatch(updateDataLoading(value)),
         deleteItemStorage: (day, week, item) => dispatch(deleteItemFromStorage(day, week, item)),
-        edit: (data, day,week) => dispatch(editToStorage(data,day,week))
+        edit: (data, day,week) => dispatch(editToStorage(data,day,week)),
+        notifications: () => dispatch(notifications())
     }
 }
 

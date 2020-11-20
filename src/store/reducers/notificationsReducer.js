@@ -18,6 +18,15 @@ const notificationsReducer = (state = initState, action) => {
                 notifications: action.notifications,
                 dataLoading: false
             }
+        case 'ADD_NOTIFICATION':
+            console.log("NEW NOTIF")
+            const notifications = [...state.notifications, action.data]
+            console.log(notifications)
+            return {
+                ...state,
+                notifications: notifications,
+                dataLoading: false
+            }
         case 'DELETE_NOTIFICATION':
             console.log("DELETE NOTIFICATION")
             const newNotifications = state.notifications.filter((item) => {

@@ -1,5 +1,5 @@
 import React from "react"
-import {AppBar, Tab, Tabs, Toolbar, Typography} from "@material-ui/core"
+import {AppBar,Toolbar, Typography} from "@material-ui/core"
 import {makeStyles} from "@material-ui/core/styles"
 import {Link as RouterLink} from "react-router-dom";
 import {AccountCircle, AddCircleOutline, Close, ExitToApp, Home, Notifications} from "@material-ui/icons";
@@ -10,7 +10,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
 import moment from "moment";
-import {deleteNotifications, notifications} from "../../../../store/actions/notificationActions";
+import Badge from "@material-ui/core/Badge";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -38,16 +38,11 @@ const MobileNavigation = (props) => {
     const classAction = styles()
     const [value, setValue] = React.useState('home');
 
-    const { notifications} = props
+    const {notifications} = props
 
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
 
-    React.useEffect(() => {
-        if(props.dataLoading) {
-            props.getNotifications()
-        }
-    })
 
     const handleMenu = (event) => {
         setAnchorEl(event.currentTarget);
@@ -68,25 +63,22 @@ const MobileNavigation = (props) => {
     };
 
     return (
-        <AppBar position="fixed" className={classes.root}>
-            <Toolbar>
-                <Tabs
-                    value={value}
-                    onChange={handleChange}
-                    indicatorColor="primary"
-                    textColor="primary"
-                    variant="scrollable"
-                    scrollButtons="auto"
-                    aria-label="scrollable auto tabs example"
-                >
-                    <Tab component={RouterLink} classes={classAction} value={"home"} to="/" icon={<Home/>}/>
-                    <Tab component={RouterLink} classes={classAction} value={"create"} to="/create/propositions"
-                         icon={<AddCircleOutline/>}/>
+        <AppBar position="fixed" className={classes.root} value={value}>
+            <Toolbar style={{display: 'flex', justifyContent:"space-between"}}>
+                <IconButton component={RouterLink} to={"/"}>
+                    <Home/>
+                </IconButton>
 
-                    <Tab component={RouterLink} classes={classAction} value={"account"} to="/mon-compte"
-                         icon={<AccountCircle/>}/>
-                    <Tab onClick={props.signOut} classes={classAction} icon={<ExitToApp/>}/>
-                </Tabs>
+                <IconButton component={RouterLink} to={"/create/propositions"}>
+                    <AddCircleOutline/>
+                </IconButton>
+
+                <IconButton aria-label="users notifications" color="inherit" onClick={handleMenu}>
+                    <Badge badgeContent={notifications.length} color="secondary">
+                        <Notifications />
+                    </Badge>
+                </IconButton>
+
                 <Menu
                     id="menu-appbar"
                     anchorEl={anchorEl}
@@ -102,14 +94,15 @@ const MobileNavigation = (props) => {
                     open={open}
                     onClose={handleClose}
                 >
-                    {notifications.length > 0 ? notifications.map((item)=> {
-                        return <MenuItem key={item.id} style={{display: 'flex', justifyContent: "space-between"}}>
-                            <Avatar  alt={"img" + item.item}
-                                     src={process.env.REACT_APP_BASE_URL + "/static/propositions/" + item.propositionImg}/>
-                            <div >
+                    {notifications.length > 0 ? notifications.map((item) => {
+                        return <MenuItem key={item.id} style={{display: 'flex', justifyContent: "space-between", whiteSpace:'pre-wrap'}}>
+                            <Avatar alt={"img" + item.item}
+                                    src={process.env.REACT_APP_BASE_URL + "/static/propositions/" + item.propositionImg}/>
+                            <div>
                                 <Typography variant={"h6"} color={"primary"} align={"left"}>
                                     {item.title}
-                                    <IconButton onClick={() => deleteNotif(item.propositionsId)} style={{float: "right"}}>
+                                    <IconButton onClick={() => deleteNotif(item.propositionsId)}
+                                                style={{float: "right"}}>
                                         <Close/>
                                     </IconButton>
                                 </Typography>
@@ -121,25 +114,22 @@ const MobileNavigation = (props) => {
                                 </Typography>
                             </div>
                         </MenuItem>
-                    }) : <MenuItem onClick={handleClose}>Pas encore de Notification</MenuItem> }
+                    }) : <MenuItem onClick={handleClose}>Pas encore de Notification</MenuItem>}
                 </Menu>
+                <IconButton component={RouterLink} to={"/mon-compte"}>
+                    <AccountCircle/>
+                </IconButton>
+                <IconButton onClick={props.signOut}>
+                    <ExitToApp/>
+                </IconButton>
             </Toolbar>
         </AppBar>
     )
 }
 
-const mapStateToProps = (state) => {
-    return {
-        notifications: state.notifications.notifications,
-        dataLoading: state.notifications.dataLoading
-    }
-}
-
 const mapDispatchToProps = (dispatch) => {
     return {
-        signOut: () => dispatch(signOut()),
-        getNotifications: () => dispatch(notifications()),
-        deleteNotification: (propId) => dispatch(deleteNotifications(propId))
+        signOut: () => dispatch(signOut())
     }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(MobileNavigation)
+export default connect(null, mapDispatchToProps)(MobileNavigation)
