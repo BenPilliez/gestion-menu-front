@@ -29,7 +29,6 @@ const DesktopNav = (props) => {
 
     const classes = useStyles()
     const { notifications} = props
-    console.log(notifications.length)
 
     const [value, setValue] = React.useState(0);
 
