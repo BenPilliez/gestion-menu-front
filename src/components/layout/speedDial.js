@@ -17,7 +17,15 @@ const useStyles = makeStyles((theme) => ({
     speedDial: {
         position: 'absolute',
         left: theme.spacing(2),
-        top: theme.spacing(1)
+        [theme.breakpoints.up('lg') ]:{
+            top: theme.spacing(10)
+        },
+        [ theme.breakpoints.up('md')]:{
+            top: theme.spacing(10)
+        },
+        [theme.breakpoints.down('sm')  ]:{
+            top: theme.spacing(2)
+        },
     },
 }));
 

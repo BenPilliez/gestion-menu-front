@@ -29,7 +29,7 @@ const Account = (props) => {
 
     return (
         <div>
-            <Grid container justify={'center'} style={{marginTop: 70}}>
+            <Grid container justify={'center'} style={{marginTop: 70, marginBottom: 100}}>
                 {paginatedArray && paginatedArray.length > 0 ? paginatedArray.map((item) => {
                     return <Grid key={item.id} item xs={12} lg={5} md={5} sm={12}>
                         <UserProps item={item}/>
@@ -57,7 +57,7 @@ const Account = (props) => {
 
                 }
 
-                <Grid item xs={12} style={{display: 'flex', justifyContent: 'center', marginTop: 2}}>
+                <Grid item xs={12} style={{display: 'flex', justifyContent: 'center', marginTop: 2, marginBottom: 5}}>
                     {paginatedArray && paginatedArray.length > 0 ?
                         <Pagination
                             count={totalPages}
@@ -67,9 +67,10 @@ const Account = (props) => {
                             showFirstButton showLastButton/> : null}
 
                 </Grid>
-
+                <Grid item>
+                    <SpeedDial/>
+                </Grid>
             </Grid>
-            <SpeedDial/>
         </div>
     )
 }

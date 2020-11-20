@@ -1,5 +1,5 @@
 import React from "react"
-import { Tabs, Tab, AppBar} from "@material-ui/core"
+import {AppBar, Tab, Tabs, Toolbar} from "@material-ui/core"
 import {makeStyles} from "@material-ui/core/styles"
 import {Link as RouterLink} from "react-router-dom";
 import {AccountCircle, AddCircleOutline, ExitToApp, Home, Notifications} from "@material-ui/icons";
@@ -8,9 +8,9 @@ import {connect} from "react-redux"
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        position: 'fixed',
-        width: "100%",
+        top: 'auto',
         bottom: 0,
+        width: "100%",
         backgroundColor: theme.palette.primary.main,
     },
 }))
@@ -37,22 +37,26 @@ const MobileNavigation = (props) => {
     };
 
     return (
-        <AppBar position="bottom" className={classes.root}>
-            <Tabs
-                value={value}
-                onChange={handleChange}
-                indicatorColor="primary"
-                textColor="primary"
-                variant="scrollable"
-                scrollButtons="auto"
-                aria-label="scrollable auto tabs example"
-            >
-                <Tab component={RouterLink} classes={classAction} value={"home"}  to="/" icon={<Home/>}/>
-                <Tab component={RouterLink} classes={classAction}  value={"create"}  to="/create/propositions" icon={<AddCircleOutline/>}/>
-                <Tab value={"notifications"} classes={classAction}   icon={<Notifications/>}/>
-                <Tab component={RouterLink} classes={classAction}  value={"account"}  to="/mon-compte" icon={<AccountCircle/>}/>
-                <Tab onClick={props.signOut} classes={classAction}   icon={<ExitToApp/>}/>
-            </Tabs>
+        <AppBar position="fixed" className={classes.root}>
+            <Toolbar>
+                <Tabs
+                    value={value}
+                    onChange={handleChange}
+                    indicatorColor="primary"
+                    textColor="primary"
+                    variant="scrollable"
+                    scrollButtons="auto"
+                    aria-label="scrollable auto tabs example"
+                >
+                    <Tab component={RouterLink} classes={classAction} value={"home"} to="/" icon={<Home/>}/>
+                    <Tab component={RouterLink} classes={classAction} value={"create"} to="/create/propositions"
+                         icon={<AddCircleOutline/>}/>
+                    <Tab value={"notifications"} classes={classAction} icon={<Notifications/>}/>
+                    <Tab component={RouterLink} classes={classAction} value={"account"} to="/mon-compte"
+                         icon={<AccountCircle/>}/>
+                    <Tab onClick={props.signOut} classes={classAction} icon={<ExitToApp/>}/>
+                </Tabs>
+            </Toolbar>
         </AppBar>
     )
 }

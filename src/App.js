@@ -9,8 +9,6 @@ import Account from "./components/user/account";
 import addMenuComponent from "./components/propositions/addMenu";
 import ConnectPannel from "./components/auth/connectPanel";
 import NavBar from "./components/layout/navigations/desktop/navbar";
-import {isMobile} from "react-device-detect"
-import MobileNavigation from "./components/layout/navigations/mobile/mobileNavigation";
 
 class App extends Component {
 
@@ -21,7 +19,7 @@ class App extends Component {
         return (
             <BrowserRouter>
                 <div className="App">
-                    {isMobile ? null : <header><NavBar/></header>}
+                    <NavBar/>
                     <Switch>
                         <Route exact path={"/"} component={dashboard}/>
                         <Route path={'/signin'} component={SignIn}/>
@@ -29,7 +27,6 @@ class App extends Component {
                         <Route path={"/create/propositions/"} component={addMenuComponent}/>
                     </Switch>
                     <ToastContainer/>
-                    {isMobile ? <footer> <MobileNavigation /> </footer> : null}
                 </div>
             </BrowserRouter>
         )

@@ -6,7 +6,6 @@ import CardMedia from '@material-ui/core/CardMedia';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import {Delete, Edit, FileCopy} from '@material-ui/icons';
-import {isMobile} from "react-device-detect"
 import moment from "moment"
 import 'moment/locale/fr'
 import CustomDialog from "../layout/customDialog";
@@ -14,12 +13,15 @@ import FormCopy from "../propositions/formCopy";
 import EditMenuComponent from "../propositions/editMenu";
 import AlertDialogSlide from "../propositions/alertDialog";
 
+
 const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
         justifyContent: 'center',
         marginTop: theme.spacing(2),
-        marginLeft: isMobile ? null : theme.spacing(2)
+        [theme.breakpoints.up('md') || theme.breakpoints.up('lg')]: {
+            marginLeft: theme.spacing(2)
+        }
     },
     details: {
         display: 'flex',
@@ -100,7 +102,7 @@ const UserProps = ({item}) => {
             <CardMedia
                 className={classes.cover}
                 image={`${process.env.REACT_APP_BASE_URL}/static/propositions/${item.imageUrl}`}
-                title="Live from space album cover"
+                title="propositions cover"
             />
 
             <CustomDialog
