@@ -25,6 +25,7 @@ class App extends Component {
 
         socket.on('PropDelete', (response) => {
             this.props.deleteItemStorage(response.day, response.week, response.id)
+            this.props.notifications()
         })
 
         socket.on('PropEdited', (response) => {
