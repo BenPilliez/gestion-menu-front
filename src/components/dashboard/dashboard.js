@@ -3,15 +3,7 @@ import {connect} from "react-redux"
 import {Button, Container, Grid, Paper, withStyles} from "@material-ui/core"
 import Calendar from "react-calendar"
 import 'react-calendar/dist/Calendar.css'
-import {
-    addToStorage,
-    deleteItemFromStorage,
-    editToStorage,
-    getMenusDays,
-    getWeeksMenu,
-    updateDataLoading
-} from "../../store/actions/menuActions"
-import {notifications} from "../../store/actions/notificationActions";
+import {getMenusDays, getWeeksMenu, updateDataLoading} from "../../store/actions/menuActions"
 import moment from "moment"
 import {Link as RouterLink} from "react-router-dom";
 import {AddCircle, NavigateBefore, NavigateNext, SkipNext, SkipPrevious} from "@material-ui/icons";

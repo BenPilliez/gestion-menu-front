@@ -10,7 +10,7 @@ import addMenuComponent from "./components/propositions/addMenu";
 import ConnectPannel from "./components/auth/connectPanel";
 import AppNav from "./components/layout/navigations/AppBar/AppNav";
 import {Socket} from "./helpers/socket";
-import {addToStorage, deleteItemFromStorage, editToStorage, updateDataLoading} from "./store/actions/menuActions"
+import {addToStorage, deleteItemFromStorage, editToStorage} from "./store/actions/menuActions"
 import {notifications} from "./store/actions/notificationActions";
 
 const socket = Socket()
