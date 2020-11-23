@@ -3,17 +3,17 @@ import {connect} from "react-redux"
 import {signIn} from "../../store/actions/authActions"
 import {Redirect} from "react-router-dom"
 import {
-    withStyles,
-    Button,
-    Link,
-    Grid,
-    Container,
-    Typography,
     Avatar,
-    OutlinedInput,
+    Button,
+    Container,
+    FormControl,
+    IconButton,
     InputAdornment,
+    InputLabel,
+    OutlinedInput,
     TextField,
-    IconButton, FormControl, InputLabel
+    Typography,
+    withStyles
 } from "@material-ui/core"
 import {LockOutlined, Visibility, VisibilityOff} from "@material-ui/icons"
 import {ToastContainer} from "react-toastify";
@@ -77,10 +77,10 @@ class SignIn extends Component {
     render() {
         const {classes, user} = this.props
 
-        if (user) return <Redirect to={"/"} />
+        if (user) return <Redirect to={"/"}/>
 
         return (
-            <Container >
+            <Container>
                 <div className={classes.paper}>
                     <Avatar className={classes.avatar}>
                         <LockOutlined/>
@@ -133,13 +133,6 @@ class SignIn extends Component {
                         >
                             Se connecter
                         </Button>
-                        <Grid container>
-                            <Grid item xs>
-                                <Link href="#" variant="body2">
-                                    T'as oublié ton mot de passe ?
-                                </Link>
-                            </Grid>
-                        </Grid>
                     </form>
                 </div>
                 <ToastContainer/>
