@@ -1,3 +1,6 @@
+# Accès au site en version dev
+https://labonnebouffe-dev.benpilliez.com login: lesTuches mdp 2E5G9*nscN,:
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
