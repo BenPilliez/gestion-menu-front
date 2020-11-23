@@ -17,10 +17,8 @@ import {Link as RouterLink} from "react-router-dom";
 import {AddCircle, NavigateBefore, NavigateNext, SkipNext, SkipPrevious} from "@material-ui/icons";
 import CardLists from "../layout/cardsList";
 import "moment/locale/fr"
-import {Socket} from "../../helpers/socket";
 
 const maxDate = moment().week(moment().weeksInYear()).endOf('isoWeek').format('L')
-const socket = Socket()
 
 const useStyles = (theme) => ({
     flex: {
@@ -43,25 +41,8 @@ class Dashboard extends Component {
     }
 
     componentDidMount() {
-        socket.on('PropCreated', (response) => {
-            this.props.addToStorage(response, response.day, response.week)
-            this.props.notifications()
-            this.props.getMenus(this.state.day, this.state.week)
-        })
-
-        socket.on('PropDelete', (response) => {
-            this.props.deleteItemStorage(response.day, response.week, response.id)
-            this.props.getMenus(this.state.day, this.state.week)
-        })
-
-        socket.on('PropEdited', (response) => {
-            this.props.edit(response, response.day, response.week)
-            this.props.getMenus(this.state.day, this.state.week)
-        })
-
         this.props.getMenus(this.state.day, this.state.week)
     }
-
 
     handleChange = (nextValue) => {
         moment.locale('fr')
@@ -168,11 +149,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         getMenus: (day, query) => dispatch(getMenusDays(day, query)),
-        addToStorage: (data, day, weekNumber) => dispatch(addToStorage(data, day, weekNumber)),
         updateDataLoading: (value) => dispatch(updateDataLoading(value)),
-        deleteItemStorage: (day, week, item) => dispatch(deleteItemFromStorage(day, week, item)),
-        edit: (data, day, week) => dispatch(editToStorage(data, day, week)),
-        notifications: () => dispatch(notifications()),
         weekList: (weekNumber) => dispatch(getWeeksMenu(weekNumber))
     }
 }
