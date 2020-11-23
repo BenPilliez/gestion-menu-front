@@ -1,5 +1,5 @@
 import React from "react"
-import {AppBar,Toolbar, Typography} from "@material-ui/core"
+import {AppBar, Toolbar, Typography} from "@material-ui/core"
 import {makeStyles} from "@material-ui/core/styles"
 import {Link as RouterLink} from "react-router-dom";
 import {AccountCircle, AddCircleOutline, Close, ExitToApp, Home, Notifications} from "@material-ui/icons";
@@ -21,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
+/*
 const styles = makeStyles((theme) => ({
     root: {
         color: "white",
@@ -30,13 +31,13 @@ const styles = makeStyles((theme) => ({
     },
     selected: {}
 }))
+*/
 
 
 const MobileNavigation = (props) => {
 
     const classes = useStyles()
-    const classAction = styles()
-    const [value, setValue] = React.useState('home');
+    const [value] = React.useState('home');
 
     const {notifications} = props
 
@@ -57,14 +58,9 @@ const MobileNavigation = (props) => {
         setAnchorEl(null)
     }
 
-
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
-    };
-
     return (
         <AppBar position="fixed" className={classes.root} value={value}>
-            <Toolbar style={{display: 'flex', justifyContent:"space-between"}}>
+            <Toolbar style={{display: 'flex', justifyContent: "space-between"}}>
                 <IconButton component={RouterLink} to={"/"}>
                     <Home/>
                 </IconButton>
@@ -75,7 +71,7 @@ const MobileNavigation = (props) => {
 
                 <IconButton aria-label="users notifications" color="inherit" onClick={handleMenu}>
                     <Badge badgeContent={notifications.length} color="secondary">
-                        <Notifications />
+                        <Notifications/>
                     </Badge>
                 </IconButton>
 
@@ -95,7 +91,11 @@ const MobileNavigation = (props) => {
                     onClose={handleClose}
                 >
                     {notifications.length > 0 ? notifications.map((item) => {
-                        return <MenuItem key={item.id} style={{display: 'flex', justifyContent: "space-between", whiteSpace:'pre-wrap'}}>
+                        return <MenuItem key={item.id} style={{
+                            display: 'flex',
+                            justifyContent: "space-between",
+                            whiteSpace: 'pre-wrap'
+                        }}>
                             <Avatar alt={"img" + item.item}
                                     src={process.env.REACT_APP_BASE_URL + "/static/propositions/" + item.propositionImg}/>
                             <div>

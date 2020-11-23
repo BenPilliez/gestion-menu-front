@@ -18,10 +18,9 @@ export const notifications = () => {
 export const deleteNotifications = (propId) => {
     return (dispatch, getState, {axiosInstance}) => {
         dispatch(dataLoading())
-        console.log(propId)
         axiosInstance({url: `${process.env.REACT_APP_BASE_URL}/notifications/${propId}`, method: 'DELETE'})
             .then((res) => {
-                dispatch(notifications())
+                dispatch({type:"DELETE_NOTIFICATION", id:propId})
             }).catch(err => {
             console.error(err)
         })

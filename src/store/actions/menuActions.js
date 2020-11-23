@@ -28,6 +28,7 @@ export const isOk = () => {
         dispatch({type: 'IS_OK', value: false})
     }
 }
+
 export const deleteItemFromStorage = (day, weekNumber, item) => {
     return (dispatch) => {
         dispatch({type: "DELETE_ITEM_FROM_STORAGE", day, weekNumber, item})
@@ -61,6 +62,18 @@ export const getMenusDays = (day, weekNumber) => {
                 })
         }
 
+    }
+}
+
+export const getWeeksMenu = (weekNumber) => {
+    return (dispatch, getState, {axiosInstance}) => {
+        dispatch(dataLoading())
+        axiosInstance({url: `${process.env.REACT_APP_BASE_URL}/propositions/list/${weekNumber}` , method: 'GET'})
+            .then((res) => {
+                dispatch({type:"WEEK_LIST", data: res.data.rows})
+            }).catch(err => {
+            console.error(err)
+        })
     }
 }
 
@@ -103,7 +116,7 @@ export const editMenu = (id, form) => {
             .then((res) => {
                 toast.success('Le menu a bien été modifié')
             }).catch(err => {
-                console.log(err)
+            console.log(err)
             toast.error('Il y a eu un problème pendant la mise à jour')
         })
     }

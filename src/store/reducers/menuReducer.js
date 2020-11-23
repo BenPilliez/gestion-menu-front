@@ -1,5 +1,7 @@
 const initState = {
     propositions: null,
+    weekList: null,
+    isWeekList: false,
     allProps: {},
     userPropositions: null,
     totalItems: null,
@@ -16,12 +18,20 @@ const menuReducer = (state = initState, action) => {
                 ...state,
                 isDataLoaded: false,
             }
+        case 'WEEK_LIST':
+            return{
+                ...state,
+                isWeekList: true,
+                isDataLoaded: true,
+                weekList: action.data
+            }
         case 'LOAD_FROM_REQUEST':
             console.log('LOAD FROM REQUEST')
             localStorage.setItem(`${action.day}-${action.weekNumber}`, JSON.stringify(action.propositions))
             return {
                 ...state,
                 isDataLoaded: true,
+                isWeekList: false,
                 propositions: JSON.parse(localStorage.getItem(`${action.day}-${action.weekNumber}`))
             }
         case 'GET_FROM_LOCALSTORAGE':
@@ -29,6 +39,7 @@ const menuReducer = (state = initState, action) => {
             return {
                 ...state,
                 isDataLoaded: true,
+                isWeekList: false,
                 propositions: JSON.parse(localStorage.getItem(`${action.day}-${action.weekNumber}`))
             }
         case 'SENDING_REQUEST': {

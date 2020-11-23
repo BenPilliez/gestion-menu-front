@@ -1,15 +1,21 @@
 import React, {Component} from "react"
 import {connect} from "react-redux"
-import {Box, Button, Container, Grid, withStyles,Paper} from "@material-ui/core"
+import {Button, Container, Grid, Paper, withStyles} from "@material-ui/core"
 import Calendar from "react-calendar"
 import 'react-calendar/dist/Calendar.css'
-import {addToStorage, deleteItemFromStorage, getMenusDays, updateDataLoading, editToStorage} from "../../store/actions/menuActions"
+import {
+    addToStorage,
+    deleteItemFromStorage,
+    editToStorage,
+    getMenusDays,
+    getWeeksMenu,
+    updateDataLoading
+} from "../../store/actions/menuActions"
 import {notifications} from "../../store/actions/notificationActions";
 import moment from "moment"
 import {Link as RouterLink} from "react-router-dom";
 import {AddCircle, NavigateBefore, NavigateNext, SkipNext, SkipPrevious} from "@material-ui/icons";
 import CardLists from "../layout/cardsList";
-import Skeleton from "@material-ui/lab/Skeleton";
 import "moment/locale/fr"
 import {Socket} from "../../helpers/socket";
 
@@ -57,7 +63,6 @@ class Dashboard extends Component {
     }
 
 
-
     handleChange = (nextValue) => {
         moment.locale('fr')
 
@@ -75,24 +80,37 @@ class Dashboard extends Component {
 
     }
 
+    handleLoadWeekList = (weekNumber) => {
+        this.props.weekList(weekNumber)
+    }
+
     componentWillUnmount() {
         this.props.updateDataLoading(false)
     }
 
     render() {
 
-        const {propositions, isDataLoaded, classes} = this.props
+        const {propositions, isDataLoaded, isWeekList, weekListData, classes} = this.props
+
+        const weekList = isDataLoaded && weekListData ? weekListData.map((item) => {
+            return (
+                <CardLists key={item.id} proposition={item}/>
+            )
+        }) : null
 
         const propos = isDataLoaded && propositions ? propositions.map((item) => {
             return (
                 <CardLists key={item.id} proposition={item}/>
             )
-        }) : (
-            <Box pt={0.5}>
-                <Skeleton/>
-                <Skeleton width="60%"/>
-            </Box>
-        )
+        }) : null
+
+        let data = null
+        if (isWeekList && weekList) {
+            data = weekList
+        } else if (isWeekList === false && propos) {
+            data = propos
+        }
+
         return (
             <div>
                 <Container style={{marginTop: 100, marginBottom: 100}}>
@@ -107,6 +125,8 @@ class Dashboard extends Component {
                                     next2Label={<SkipNext/>}
                                     tileClassName={'tile'}
                                     onChange={this.handleChange}
+                                    showWeekNumbers={true}
+                                    onClickWeekNumber={(weekNumber) => this.handleLoadWeekList(weekNumber)}
                                     maxDate={this.state.maxDate}/>
                             </Paper>
                         </Grid>
@@ -127,7 +147,7 @@ class Dashboard extends Component {
                                 Ajouter une proposition
                             </Button>
                         </Grid>
-                        {propositions && propositions.length > 0 ? propos : null}
+                        {data}
                     </Grid>
                 </Container>
             </div>
@@ -139,7 +159,9 @@ const mapStateToProps = (state) => {
     return {
         isDataLoaded: state.menus.isDataLoaded,
         propositions: state.menus.propositions,
-        isDataCreated: state.menus.isCreatedDeleteOrEdit
+        isDataCreated: state.menus.isCreatedDeleteOrEdit,
+        isWeekList: state.menus.isWeekList,
+        weekListData: state.menus.weekList
     }
 }
 
@@ -149,8 +171,9 @@ const mapDispatchToProps = (dispatch) => {
         addToStorage: (data, day, weekNumber) => dispatch(addToStorage(data, day, weekNumber)),
         updateDataLoading: (value) => dispatch(updateDataLoading(value)),
         deleteItemStorage: (day, week, item) => dispatch(deleteItemFromStorage(day, week, item)),
-        edit: (data, day,week) => dispatch(editToStorage(data,day,week)),
-        notifications: () => dispatch(notifications())
+        edit: (data, day, week) => dispatch(editToStorage(data, day, week)),
+        notifications: () => dispatch(notifications()),
+        weekList: (weekNumber) => dispatch(getWeeksMenu(weekNumber))
     }
 }
 
