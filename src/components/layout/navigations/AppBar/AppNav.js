@@ -16,7 +16,7 @@ const AppNav = (props) => {
         }
     })
 
-    const matches = useMediaQuery(theme => theme.breakpoints.down('sm') || theme.breakpoints.down('xs'));
+    const matches = useMediaQuery(theme => theme.breakpoints.down('sm') || theme.breakpoints.down('xs'), {noSsr: true})
 
     return (
         matches === true ? (<MobileNavigation  deleteNotification={props.deleteNotification} notifications={props.notifications} />) : (<DesktopNav deleteNotification={props.deleteNotification} notifications={props.notifications}  />)
