@@ -138,7 +138,6 @@ const UserProps = ({item}) => {
                 title={"Supprimer ?"}
                 content={"Tu es sur le point de supprimer une proposition tu es bien sur ?"}
                 id={item.id}/>
-
         </Card>
     );
 }
