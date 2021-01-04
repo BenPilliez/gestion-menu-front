@@ -121,7 +121,6 @@ class addMenuComponent extends Component {
                                 id="content"
                                 label="Une petite accroche qui donne envie"
                                 type="text"
-                                required
                                 onChange={this.handleChange}
                             />
                         </Grid>
