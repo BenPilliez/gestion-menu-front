@@ -55,7 +55,6 @@ const MobileNavigation = (props) => {
 
     const deleteNotif = (propId) => {
         props.deleteNotification(propId)
-        setAnchorEl(null)
     }
 
     return (
